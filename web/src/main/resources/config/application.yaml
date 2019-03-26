@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    active: @profileActive@
+  messages:
+    basename: i18n/messages
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy/MM/dd
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    hibernate:
+      ddl-auto: none
+logging:
+  config: classpath:log/logback.xml

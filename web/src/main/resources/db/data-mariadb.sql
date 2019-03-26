@@ -1,0 +1,12 @@
+INSERT INTO account_type (name, create_date) VALUES ('銀行', NOW());
+INSERT INTO account_type (name, create_date) VALUES ('信用卡', NOW());
+INSERT INTO account_type (name, create_date) VALUES ('現金', NOW());
+INSERT INTO currency (name, create_date) VALUES ('新台幣', NOW());
+INSERT INTO currency (name, create_date) VALUES ('美元', NOW());
+INSERT INTO category (name, category_type, create_date) VALUES ('一般收入', 0, NOW());
+INSERT INTO category (name, category_type, create_date) VALUES ('餐飲', 1, NOW());
+INSERT INTO item (name, category_id, create_date) SELECT '薪資', id, NOW() FROM category WHERE name = '一般收入';
+INSERT INTO item (name, category_id, create_date) SELECT '活存利息', id, NOW() FROM category WHERE name = '一般收入';
+INSERT INTO item (name, category_id, create_date) SELECT '早餐', id, NOW() FROM category WHERE name = '餐飲';
+INSERT INTO item (name, category_id, create_date) SELECT '午餐', id, NOW() FROM category WHERE name = '餐飲';
+INSERT INTO item (name, category_id, create_date) SELECT '晚餐', id, NOW() FROM category WHERE name = '餐飲';
