@@ -25,6 +25,8 @@
     </modules>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <start-class>tw.com.rex.accountbookservice.web.AccountBookServiceApplication</start-class>
     </properties>
@@ -107,6 +109,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <additionalProperties>
+                        <encoding.source>UTF-8</encoding.source>
+                        <encoding.reporting>UTF-8</encoding.reporting>
+                    </additionalProperties>
+                    <!--缺少此段在執行 package 的時候會出現 cannot find symbol 的錯誤-->
+                    <classifier>exec</classifier>
+                </configuration>
             </plugin>
         </plugins>
     </build>
