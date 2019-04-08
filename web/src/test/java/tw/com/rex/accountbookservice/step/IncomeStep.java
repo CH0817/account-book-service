@@ -1,6 +1,8 @@
 package tw.com.rex.accountbookservice.step;
 
-import org.jbehave.core.annotations.*;
+import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Then;
+import org.jbehave.core.annotations.When;
 import org.springframework.stereotype.Component;
 
 @Component
