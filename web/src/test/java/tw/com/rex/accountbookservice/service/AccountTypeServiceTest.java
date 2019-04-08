@@ -1,34 +1,32 @@
 package tw.com.rex.accountbookservice.service;
 
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import tw.com.rex.accountbookservice.AccountBookServiceApplication;
 import tw.com.rex.accountbookservice.model.dao.AccountTypeDAO;
 import tw.com.rex.accountbookservice.model.vo.AccountTypeVO;
-import tw.com.rex.accountbookservice.repository.AccountTypeRepository;
 import tw.com.rex.accountbookservice.service.impl.AccountTypeServiceImpl;
 
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.*;
+import javax.transaction.Transactional;
 
+import static org.junit.Assert.assertNotNull;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = AccountBookServiceApplication.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class AccountTypeServiceTest {
 
-    @Spy
-    @InjectMocks
+    @Autowired
     private AccountTypeServiceImpl service;
-    @Mock
-    private AccountTypeRepository repository;
 
     @Test
+    // @Sql("/db/schema-mariadb.sql")
+    @Transactional
     public void save() throws Exception {
-        AccountTypeDAO entity = new AccountTypeDAO("XD");
-        AccountTypeDAO dao = new AccountTypeDAO("XD");
-        dao.setId(1L);
-        when(repository.save(entity)).thenReturn(dao);
-        AccountTypeVO vo = service.save(entity);
-        verify(repository, times(1)).save(entity);
-        assertNotNull("return id is null", vo.getId());
+        AccountTypeVO vo = service.save(new AccountTypeDAO("測試"));
+        assertNotNull(vo.getId());
     }
 
 }

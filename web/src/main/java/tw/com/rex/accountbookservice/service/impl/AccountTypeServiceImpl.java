@@ -11,6 +11,7 @@ import tw.com.rex.accountbookservice.repository.AccountTypeRepository;
 import tw.com.rex.accountbookservice.service.AccountTypeService;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 
 @Service
 @Transactional
@@ -26,8 +27,10 @@ public class AccountTypeServiceImpl implements AccountTypeService {
 
     @Override
     public AccountTypeVO save(AccountTypeDAO entity) throws Exception {
-        // TODO
         logger.info("entity: {}", entity);
+        LocalDate now = LocalDate.now();
+        entity.setCreateDate(now);
+        entity.setUpdateDate(now);
         AccountTypeVO result = new AccountTypeVO();
         AccountTypeDAO dao = repository.save(entity);
         BeanUtils.copyProperties(dao, result);
