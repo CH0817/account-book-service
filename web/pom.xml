@@ -12,6 +12,10 @@
     <artifactId>web</artifactId>
     <packaging>war</packaging>
 
+    <properties>
+        <jbehave.version>4.4</jbehave.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>tw.com.rex</groupId>
@@ -32,6 +36,25 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--JBehave-->
+        <dependency>
+            <groupId>org.jbehave</groupId>
+            <artifactId>jbehave-core</artifactId>
+            <version>${jbehave.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jbehave</groupId>
+            <artifactId>jbehave-spring</artifactId>
+            <version>${jbehave.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jbehave</groupId>
+            <artifactId>jbehave-gherkin</artifactId>
+            <version>${jbehave.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
