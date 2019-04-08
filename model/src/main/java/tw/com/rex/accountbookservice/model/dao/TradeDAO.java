@@ -1,14 +1,17 @@
 package tw.com.rex.accountbookservice.model.dao;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import tw.com.rex.accountbookservice.model.dao.base.BaseDAO;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -25,5 +28,7 @@ public class TradeDAO extends BaseDAO {
     private String note;
     @Column(name = "transact_date", nullable = false)
     private LocalDate transactDate;
+    @Column(name = "cost", precision = 10, scale = 2, nullable = false)
+    private BigDecimal cost;
 
 }

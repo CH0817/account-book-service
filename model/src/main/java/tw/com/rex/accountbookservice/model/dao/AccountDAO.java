@@ -1,16 +1,16 @@
 package tw.com.rex.accountbookservice.model.dao;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import tw.com.rex.accountbookservice.model.dao.base.BaseDAO;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -39,4 +39,23 @@ public class AccountDAO extends BaseDAO {
     @JoinColumn(name = "account_id")
     private List<TradeDAO> transactions;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof AccountDAO)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        AccountDAO that = (AccountDAO) o;
+        return getName().equals(that.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getName());
+    }
 }
