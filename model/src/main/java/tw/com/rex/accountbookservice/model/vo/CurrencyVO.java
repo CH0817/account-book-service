@@ -8,6 +8,8 @@ import org.springframework.beans.BeanUtils;
 import tw.com.rex.accountbookservice.model.dao.CurrencyDAO;
 import tw.com.rex.accountbookservice.model.vo.base.BaseVO;
 
+import java.util.Objects;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,6 +19,8 @@ public class CurrencyVO extends BaseVO {
     private String name;
 
     public CurrencyVO(CurrencyDAO dao) {
-        BeanUtils.copyProperties(dao, this);
+        if (Objects.nonNull(dao)) {
+            BeanUtils.copyProperties(dao, this);
+        }
     }
 }
