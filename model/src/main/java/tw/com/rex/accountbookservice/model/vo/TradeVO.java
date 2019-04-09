@@ -5,18 +5,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
-import tw.com.rex.accountbookservice.model.dao.CurrencyDAO;
+import tw.com.rex.accountbookservice.model.dao.TradeDAO;
 import tw.com.rex.accountbookservice.model.vo.base.BaseVO;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CurrencyVO extends BaseVO {
+public class TradeVO extends BaseVO {
 
-    private String name;
+    private AccountVO accountDTO;
+    private ItemVO item;
+    private String note;
+    private LocalDate transactDate;
+    private BigDecimal cost;
 
-    public CurrencyVO(CurrencyDAO dao) {
+    public TradeVO(TradeDAO dao) {
         BeanUtils.copyProperties(dao, this);
     }
 }
