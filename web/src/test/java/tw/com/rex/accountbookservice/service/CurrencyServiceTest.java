@@ -1,15 +1,14 @@
 package tw.com.rex.accountbookservice.service;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.util.CollectionUtils;
 import tw.com.rex.accountbookservice.exception.RepositoryException;
 import tw.com.rex.accountbookservice.model.dao.CurrencyDAO;
 import tw.com.rex.accountbookservice.model.vo.CurrencyVO;
 import tw.com.rex.accountbookservice.repository.CurrencyRepository;
+import tw.com.rex.accountbookservice.service.base.BaseServiceTest;
 import tw.com.rex.accountbookservice.service.impl.CurrencyServiceImpl;
 
 import java.util.ArrayList;
@@ -20,8 +19,7 @@ import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
-public class CurrencyServiceTest {
+public class CurrencyServiceTest extends BaseServiceTest {
 
     @InjectMocks
     private CurrencyServiceImpl service;

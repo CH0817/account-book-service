@@ -1,15 +1,14 @@
 package tw.com.rex.accountbookservice.service;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.util.CollectionUtils;
 import tw.com.rex.accountbookservice.exception.RepositoryException;
 import tw.com.rex.accountbookservice.model.dao.AccountTypeDAO;
 import tw.com.rex.accountbookservice.model.vo.AccountTypeVO;
 import tw.com.rex.accountbookservice.repository.AccountTypeRepository;
+import tw.com.rex.accountbookservice.service.base.BaseServiceTest;
 import tw.com.rex.accountbookservice.service.impl.AccountTypeServiceImpl;
 
 import java.util.ArrayList;
@@ -19,8 +18,7 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
-public class AccountTypeServiceTest {
+public class AccountTypeServiceTest extends BaseServiceTest {
 
     @InjectMocks
     private AccountTypeServiceImpl service;
