@@ -33,7 +33,6 @@ public abstract class BaseServiceImpl<B extends JpaRepository, E extends BaseDAO
     @Override
     public R save(E entity) throws RepositoryException {
         entity.setCreateDate(LocalDate.now());
-        entity.setUpdateDate(LocalDate.now());
         R result = newResultInstance().get();
         try {
             E dao = (E) repository.save(entity);
