@@ -6,7 +6,6 @@ import org.mockito.Mock;
 import org.springframework.util.CollectionUtils;
 import tw.com.rex.accountbookservice.exception.RepositoryException;
 import tw.com.rex.accountbookservice.model.dao.CurrencyDAO;
-import tw.com.rex.accountbookservice.model.vo.CurrencyVO;
 import tw.com.rex.accountbookservice.repository.CurrencyRepository;
 import tw.com.rex.accountbookservice.service.base.BaseServiceTest;
 import tw.com.rex.accountbookservice.service.impl.CurrencyServiceImpl;
@@ -32,10 +31,10 @@ public class CurrencyServiceTest extends BaseServiceTest {
         CurrencyDAO dao = getCurrencyDAO();
         // when
         when(repository.save(any(CurrencyDAO.class))).thenReturn(dao);
-        CurrencyVO vo = service.save(new CurrencyDAO());
+        CurrencyDAO result = service.save(new CurrencyDAO());
         // then
         verify(repository, atLeastOnce()).save(any(CurrencyDAO.class));
-        assertEquals(1L, vo.getId().longValue());
+        assertEquals(dao.getId().longValue(), result.getId().longValue());
     }
 
     @Test(expected = RepositoryException.class)
@@ -73,7 +72,7 @@ public class CurrencyServiceTest extends BaseServiceTest {
         CurrencyDAO dao = getCurrencyDAO();
         // when
         when(repository.findById(anyLong())).thenReturn(Optional.of(dao));
-        CurrencyVO vo = service.findById(1L);
+        CurrencyDAO vo = service.findById(1L);
         // then
         verify(repository, atLeastOnce()).findById(anyLong());
         assertEquals(dao.getId().longValue(), vo.getId().longValue());
@@ -86,7 +85,7 @@ public class CurrencyServiceTest extends BaseServiceTest {
         daoList.add(getCurrencyDAO());
         // when
         when(repository.findAll()).thenReturn(daoList);
-        List<CurrencyVO> accountTypes = service.findAll();
+        List<CurrencyDAO> accountTypes = service.findAll();
         // then
         verify(repository, atLeastOnce()).findAll();
         assertFalse(CollectionUtils.isEmpty(accountTypes));
@@ -99,11 +98,11 @@ public class CurrencyServiceTest extends BaseServiceTest {
         // when
         when(repository.findById(anyLong())).thenReturn(Optional.of(dao));
         when(repository.save(any(CurrencyDAO.class))).thenReturn(dao);
-        CurrencyVO vo = service.update(dao);
+        CurrencyDAO result = service.update(dao);
         // then
         verify(repository, atLeastOnce()).findById(anyLong());
         verify(repository, atLeastOnce()).save(any(CurrencyDAO.class));
-        assertEquals(dao.getId().longValue(), vo.getId().longValue());
+        assertEquals(dao.getId().longValue(), result.getId().longValue());
     }
 
     @Test(expected = RepositoryException.class)

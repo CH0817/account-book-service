@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.util.CollectionUtils;
 import tw.com.rex.accountbookservice.exception.RepositoryException;
 import tw.com.rex.accountbookservice.model.dao.base.BaseDAO;
-import tw.com.rex.accountbookservice.model.vo.base.BaseVO;
 import tw.com.rex.accountbookservice.service.base.BaseService;
 
 import java.lang.reflect.ParameterizedType;
@@ -15,25 +14,24 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @SuppressWarnings("all")
-public abstract class BaseServiceImpl<B extends JpaRepository, E extends BaseDAO, R extends BaseVO>
-        implements BaseService<E, R> {
+public abstract class BaseServiceImpl<B extends JpaRepository, E extends BaseDAO>
+        implements BaseService<E> {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private B repository;
-    private Class<R> rClass;
+    private Class<E> eClass;
 
     public BaseServiceImpl(B repository) {
         this.repository = repository;
-        rClass = (Class<R>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[2];
+        eClass = (Class<E>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
     }
 
     @Override
-    public R save(E entity) throws RepositoryException {
+    public E save(E entity) throws RepositoryException {
         entity.setCreateDate(LocalDate.now());
-        R result = newResultInstance().get();
+        E result = newResultInstance().get();
         try {
             E dao = (E) repository.save(entity);
             BeanUtils.copyProperties(dao, result);
@@ -54,8 +52,8 @@ public abstract class BaseServiceImpl<B extends JpaRepository, E extends BaseDAO
     }
 
     @Override
-    public R findById(long id) {
-        R result = newResultInstance().get();
+    public E findById(long id) {
+        E result = newResultInstance().get();
         Optional<E> daoOptional = repository.findById(id);
         if (daoOptional.isPresent()) {
             BeanUtils.copyProperties(daoOptional.get(), result);
@@ -64,28 +62,24 @@ public abstract class BaseServiceImpl<B extends JpaRepository, E extends BaseDAO
     }
 
     @Override
-    public List<R> findAll() {
+    public List<E> findAll() {
         List<E> all = repository.findAll();
         if (!CollectionUtils.isEmpty(all)) {
-            return all.stream()//
-                    .map(this::newResultInstance)//
-                    .map(Optional::get)//
-                    .collect(Collectors.toList());
+            return all;
         }
         return Collections.emptyList();
     }
 
     @Override
-    public R update(E entity) {
-        R result = newResultInstance().get();
+    public E update(E entity) {
+        E result = newResultInstance().get();
         Optional<E> daoOptional = repository.findById(entity.getId());
         if (daoOptional.isPresent()) {
             E dao = daoOptional.get();
             BeanUtils.copyProperties(entity, dao, "id", "createDate");
             dao.setUpdateDate(LocalDate.now());
             try {
-                dao = (E) repository.save(dao);
-                result = newResultInstance(dao).get();
+                result = (E) repository.save(dao);
             } catch (Exception e) {
                 throw new RepositoryException("update " + dao.getClass().getSimpleName() + " failure " + entity, e);
             }
@@ -93,20 +87,10 @@ public abstract class BaseServiceImpl<B extends JpaRepository, E extends BaseDAO
         return result;
     }
 
-    private Optional<R> newResultInstance() {
-        Optional<R> result = Optional.empty();
+    private Optional<E> newResultInstance() {
+        Optional<E> result = Optional.empty();
         try {
-            result = Optional.of(rClass.newInstance());
-        } catch (Exception e) {
-            loggerNewReturnInstance(e);
-        }
-        return result;
-    }
-
-    private Optional<R> newResultInstance(E param) {
-        Optional<R> result = Optional.empty();
-        try {
-            result = Optional.of(rClass.getDeclaredConstructor(param.getClass()).newInstance(param));
+            result = Optional.of(eClass.newInstance());
         } catch (Exception e) {
             loggerNewReturnInstance(e);
         }
@@ -115,6 +99,6 @@ public abstract class BaseServiceImpl<B extends JpaRepository, E extends BaseDAO
 
     private void loggerNewReturnInstance(Exception e) {
         e.printStackTrace();
-        logger.error("new {} instance error, {}", rClass.getName(), e.getMessage());
+        logger.error("new {} instance error, {}", eClass.getName(), e.getMessage());
     }
 }

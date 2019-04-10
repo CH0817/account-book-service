@@ -6,7 +6,6 @@ import org.mockito.Mock;
 import org.springframework.util.CollectionUtils;
 import tw.com.rex.accountbookservice.exception.RepositoryException;
 import tw.com.rex.accountbookservice.model.dao.AccountTypeDAO;
-import tw.com.rex.accountbookservice.model.vo.AccountTypeVO;
 import tw.com.rex.accountbookservice.repository.AccountTypeRepository;
 import tw.com.rex.accountbookservice.service.base.BaseServiceTest;
 import tw.com.rex.accountbookservice.service.impl.AccountTypeServiceImpl;
@@ -31,10 +30,10 @@ public class AccountTypeServiceTest extends BaseServiceTest {
         AccountTypeDAO dao = getAccountTypeDAO();
         // when
         when(repository.save(any(AccountTypeDAO.class))).thenReturn(dao);
-        AccountTypeVO vo = service.save(new AccountTypeDAO());
+        AccountTypeDAO result = service.save(new AccountTypeDAO());
         // then
         verify(repository, atLeastOnce()).save(any(AccountTypeDAO.class));
-        assertEquals(1L, vo.getId().longValue());
+        assertEquals(dao.getId().longValue(), result.getId().longValue());
     }
 
     @Test(expected = RepositoryException.class)
@@ -72,10 +71,10 @@ public class AccountTypeServiceTest extends BaseServiceTest {
         AccountTypeDAO dao = getAccountTypeDAO();
         // when
         when(repository.findById(anyLong())).thenReturn(Optional.of(dao));
-        AccountTypeVO vo = service.findById(1L);
+        AccountTypeDAO result = service.findById(1L);
         // then
         verify(repository, atLeastOnce()).findById(anyLong());
-        assertEquals(dao.getId().longValue(), vo.getId().longValue());
+        assertEquals(dao.getId().longValue(), result.getId().longValue());
     }
 
     @Test
@@ -85,7 +84,7 @@ public class AccountTypeServiceTest extends BaseServiceTest {
         daoList.add(getAccountTypeDAO());
         // when
         when(repository.findAll()).thenReturn(daoList);
-        List<AccountTypeVO> accountTypes = service.findAll();
+        List<AccountTypeDAO> accountTypes = service.findAll();
         // then
         verify(repository, atLeastOnce()).findAll();
         assertFalse(CollectionUtils.isEmpty(accountTypes));
@@ -98,11 +97,11 @@ public class AccountTypeServiceTest extends BaseServiceTest {
         // when
         when(repository.findById(anyLong())).thenReturn(Optional.of(dao));
         when(repository.save(any(AccountTypeDAO.class))).thenReturn(dao);
-        AccountTypeVO vo = service.update(dao);
+        AccountTypeDAO result = service.update(dao);
         // then
         verify(repository, atLeastOnce()).findById(anyLong());
         verify(repository, atLeastOnce()).save(any(AccountTypeDAO.class));
-        assertEquals(dao.getId().longValue(), vo.getId().longValue());
+        assertEquals(dao.getId().longValue(), result.getId().longValue());
     }
 
     @Test(expected = RepositoryException.class)

@@ -2,20 +2,19 @@ package tw.com.rex.accountbookservice.service.base;
 
 import tw.com.rex.accountbookservice.exception.RepositoryException;
 import tw.com.rex.accountbookservice.model.dao.base.BaseDAO;
-import tw.com.rex.accountbookservice.model.vo.base.BaseVO;
 
 import java.util.List;
 
-public interface BaseService<E extends BaseDAO, R extends BaseVO> {
+public interface BaseService<E extends BaseDAO> {
 
-    R save(E entity) throws Exception;
+    E save(E entity) throws RepositoryException;
 
     boolean deleteById(long id) throws RepositoryException;
 
-    R findById(long id);
+    E findById(long id);
 
-    List<R> findAll();
+    List<E> findAll();
 
-    R update(E entity);
+    E update(E entity);
     
 }
