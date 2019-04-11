@@ -41,11 +41,12 @@ public class BaseDAO implements Serializable {
             return false;
         }
         BaseDAO baseDAO = (BaseDAO) o;
-        return getId().equals(baseDAO.getId());
+        return Objects.equals(id, baseDAO.id) && Objects.equals(createDate, baseDAO.createDate) && Objects.equals(
+                updateDate, baseDAO.updateDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(id, createDate, updateDate);
     }
 }
