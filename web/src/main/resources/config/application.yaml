@@ -1,3 +1,6 @@
+server:
+  servlet:
+    context-path: /account-book-service
 spring:
   profiles:
     active: @profileActive@
