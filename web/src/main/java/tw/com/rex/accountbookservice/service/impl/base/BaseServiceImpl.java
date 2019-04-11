@@ -92,13 +92,10 @@ public abstract class BaseServiceImpl<B extends JpaRepository, E extends BaseDAO
         try {
             result = Optional.of(eClass.newInstance());
         } catch (Exception e) {
-            loggerNewReturnInstance(e);
+            e.printStackTrace();
+            logger.error("new {} instance error, {}", eClass.getName(), e.getMessage());
         }
         return result;
     }
 
-    private void loggerNewReturnInstance(Exception e) {
-        e.printStackTrace();
-        logger.error("new {} instance error, {}", eClass.getName(), e.getMessage());
-    }
 }
