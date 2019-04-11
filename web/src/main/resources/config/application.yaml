@@ -7,8 +7,7 @@ spring:
   messages:
     basename: i18n/messages
   jackson:
-    time-zone: GMT+8
-    date-format: yyyy/MM/dd
+    default-property-inclusion: non_null
   jpa:
     properties:
       hibernate:
