@@ -20,6 +20,8 @@ import tw.com.rex.accountbookservice.model.dao.AccountTypeDAO;
 import tw.com.rex.accountbookservice.service.AccountTypeService;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
@@ -186,6 +188,22 @@ public class AccountTypeControllerMockTest {
                 .andDo(print());
 
         verify(service, atLeastOnce()).findById(anyLong());
+    }
+
+    @Test
+    public void findAll() throws Exception {
+        List<AccountTypeDAO> types = new ArrayList<>();
+        types.add(new AccountTypeDAO("test1"));
+        types.add(new AccountTypeDAO("test2"));
+        types.add(new AccountTypeDAO("test3"));
+
+        when(service.findAll()).thenReturn(types);
+
+        mvc.perform(get("/accountType/find/all"))//
+                .andExpect(status().isOk())//
+                .andDo(print());
+
+        verify(service, atLeastOnce()).findAll();
     }
 
     private static ObjectMapper getObjectMapper() {

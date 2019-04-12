@@ -9,6 +9,8 @@ import tw.com.rex.accountbookservice.exception.RepositoryException;
 import tw.com.rex.accountbookservice.model.dao.AccountTypeDAO;
 import tw.com.rex.accountbookservice.service.AccountTypeService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/accountType")
 public class AccountTypeController {
@@ -39,6 +41,11 @@ public class AccountTypeController {
     @GetMapping("/find/{id}")
     public AccountTypeDAO findById(@PathVariable Long id) {
         return service.findById(id);
+    }
+
+    @GetMapping("/find/all")
+    public List<AccountTypeDAO> findAll() {
+        return service.findAll();
     }
 
 }
