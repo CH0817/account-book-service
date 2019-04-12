@@ -65,14 +65,13 @@ public class AccountTypeServiceTest extends BaseServiceTest {
         assertFalse("delete id " + 1L + " failure", result);
     }
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void findById() {
         // given
         AccountTypeDAO dao = getAccountTypeDAO();
         // when
         when(repository.findById(anyLong())).thenReturn(Optional.of(dao));
-        AccountTypeDAO result = service.findById(1L).get();
+        AccountTypeDAO result = service.findById(1L);
         // then
         verify(repository, atLeastOnce()).findById(anyLong());
         assertEquals(dao.getId().longValue(), result.getId().longValue());

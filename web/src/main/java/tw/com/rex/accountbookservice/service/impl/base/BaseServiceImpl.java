@@ -9,6 +9,7 @@ import tw.com.rex.accountbookservice.exception.RepositoryException;
 import tw.com.rex.accountbookservice.model.dao.base.BaseDAO;
 import tw.com.rex.accountbookservice.service.base.BaseService;
 
+import java.lang.reflect.ParameterizedType;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -19,9 +20,11 @@ public abstract class BaseServiceImpl<B extends JpaRepository, E extends BaseDAO
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private B repository;
+    private Class<E> eClass;
 
     public BaseServiceImpl(B repository) {
         this.repository = repository;
+        eClass = (Class<E>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[1];
     }
 
     @Override
@@ -46,8 +49,10 @@ public abstract class BaseServiceImpl<B extends JpaRepository, E extends BaseDAO
     }
 
     @Override
-    public Optional<E> findById(long id) {
-        return repository.findById(id);
+    public E findById(long id) {
+        Optional<E> result = repository.findById(id);
+        return (result.isPresent()) ? result.get() : result.orElseThrow(
+                () -> new RepositoryException("cannot find " + eClass.getSimpleName() + " by id: " + id));
     }
 
     @Override
@@ -61,8 +66,7 @@ public abstract class BaseServiceImpl<B extends JpaRepository, E extends BaseDAO
         Long id = entity.getId();
         String entitySimpleName = entity.getClass().getSimpleName();
 
-        E dao = findById(id)//
-                .orElseThrow(() -> new RepositoryException("cannot find " + entitySimpleName + " by id: " + id));
+        E dao = findById(id);
 
         BeanUtils.copyProperties(entity, dao, "id", "createDate");
         dao.setUpdateDate(LocalDate.now());

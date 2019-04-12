@@ -26,9 +26,19 @@ public class AccountTypeController {
         return service.save(dao);
     }
 
-    @PostMapping(path = "/delete/{id}")
+    @DeleteMapping(path = "/delete/{id}")
     public boolean deleteById(@PathVariable Long id) throws RepositoryException {
         return service.deleteById(id);
+    }
+
+    @PatchMapping(path = "/update", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+    public AccountTypeDAO update(@RequestBody AccountTypeDAO dao) throws RepositoryException {
+        return service.update(dao);
+    }
+
+    @GetMapping("/find/{id}")
+    public AccountTypeDAO findById(@PathVariable Long id) {
+        return service.findById(id);
     }
 
 }

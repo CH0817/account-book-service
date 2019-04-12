@@ -12,7 +12,7 @@ public interface BaseService<E extends BaseDAO> {
 
     boolean deleteById(long id) throws RepositoryException;
 
-    Optional<E> findById(long id);
+    E findById(long id);
 
     List<E> findAll();
 

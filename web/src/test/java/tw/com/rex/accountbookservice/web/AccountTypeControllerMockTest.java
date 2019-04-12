@@ -21,9 +21,9 @@ import tw.com.rex.accountbookservice.service.AccountTypeService;
 
 import java.time.LocalDate;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -95,7 +95,7 @@ public class AccountTypeControllerMockTest {
     public void deleteByIdSuccess() throws Exception {
         when(service.deleteById(anyLong())).thenReturn(true);
 
-        mvc.perform(post("/accountType/delete/{id}", 1L))//
+        mvc.perform(delete("/accountType/delete/{id}", 1L))//
                 .andExpect(status().isOk())//
                 .andDo(print())//
                 .andExpect(jsonPath("$", is(true)));
@@ -107,12 +107,85 @@ public class AccountTypeControllerMockTest {
     public void deleteByIdStatus500() throws Exception {
         when(service.deleteById(anyLong())).thenThrow(RepositoryException.class);
 
-        mvc.perform(post("/accountType/delete/{id}", 1L))//
+        mvc.perform(delete("/accountType/delete/{id}", 1L))//
                 .andExpect(status().isInternalServerError())//
                 .andDo(print())//
                 .andExpect(jsonPath("$").doesNotExist());
 
         verify(service, atLeastOnce()).deleteById(anyLong());
+    }
+
+    @Test
+    public void updateSuccess() throws Exception {
+        AccountTypeDAO entity = new AccountTypeDAO();
+        entity.setId(1L);
+        entity.setName("test");
+
+        AccountTypeDAO dao = new AccountTypeDAO();
+        BeanUtils.copyProperties(entity, dao);
+        dao.setName("test");
+        dao.setCreateDate(LocalDate.now().minusDays(1L));
+        dao.setUpdateDate(LocalDate.now());
+
+        when(service.update(entity)).thenReturn(dao);
+
+        mvc.perform(patch("/accountType/update")//
+                            .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)//
+                            .content(mapper.writeValueAsString(entity)))//
+                .andExpect(status().isOk())//
+                .andDo(print())//
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))//
+                .andExpect(jsonPath("$.id").exists())//
+                .andExpect(jsonPath("$.name", is(dao.getName())))//
+                .andExpect(jsonPath("$.createDate").exists())//
+                .andExpect(jsonPath("$.updateDate").exists());
+
+        verify(service, atLeastOnce()).update(entity);
+    }
+
+    @Test
+    public void updateStatus500() throws Exception {
+        AccountTypeDAO entity = new AccountTypeDAO();
+        entity.setId(1L);
+        entity.setName("銀行");
+
+        when(service.update(any())).thenThrow(RepositoryException.class);
+
+        mvc.perform(patch("/accountType/update")//
+                            .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)//
+                            .content(mapper.writeValueAsString(entity)))//
+                .andExpect(status().isInternalServerError())//
+                .andDo(print());
+
+        verify(service, atLeastOnce()).update(entity);
+    }
+
+    @Test
+    public void findById() throws Exception {
+        AccountTypeDAO dao = new AccountTypeDAO();
+        dao.setId(1L);
+        dao.setName("test");
+        dao.setCreateDate(LocalDate.now());
+        dao.setUpdateDate(LocalDate.now());
+
+        when(service.findById(anyLong())).thenReturn(dao);
+
+        mvc.perform(get("/accountType/find/{id}", 1L))//
+                .andExpect(status().isOk())//
+                .andDo(print());
+
+        verify(service, atLeastOnce()).findById(anyLong());
+    }
+
+    @Test
+    public void findByIdStatus500() throws Exception {
+        when(service.findById(anyLong())).thenThrow(RepositoryException.class);
+
+        mvc.perform(get("/accountType/find/{id}", 1L))//
+                .andExpect(status().isInternalServerError())//
+                .andDo(print());
+
+        verify(service, atLeastOnce()).findById(anyLong());
     }
 
     private static ObjectMapper getObjectMapper() {
