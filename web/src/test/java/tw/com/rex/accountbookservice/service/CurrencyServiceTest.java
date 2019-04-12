@@ -66,13 +66,14 @@ public class CurrencyServiceTest extends BaseServiceTest {
         assertFalse("delete id " + 1L + " failure", result);
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void findById() {
         // given
         CurrencyDAO dao = getCurrencyDAO();
         // when
         when(repository.findById(anyLong())).thenReturn(Optional.of(dao));
-        CurrencyDAO vo = service.findById(1L);
+        CurrencyDAO vo = service.findById(1L).get();
         // then
         verify(repository, atLeastOnce()).findById(anyLong());
         assertEquals(dao.getId().longValue(), vo.getId().longValue());

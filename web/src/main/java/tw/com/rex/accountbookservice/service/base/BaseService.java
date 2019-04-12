@@ -4,6 +4,7 @@ import tw.com.rex.accountbookservice.exception.RepositoryException;
 import tw.com.rex.accountbookservice.model.dao.base.BaseDAO;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BaseService<E extends BaseDAO> {
 
@@ -11,7 +12,7 @@ public interface BaseService<E extends BaseDAO> {
 
     boolean deleteById(long id) throws RepositoryException;
 
-    E findById(long id);
+    Optional<E> findById(long id);
 
     List<E> findAll();
 

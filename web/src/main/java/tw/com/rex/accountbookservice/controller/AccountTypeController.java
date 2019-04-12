@@ -25,17 +25,13 @@ public class AccountTypeController {
     }
 
     @PostMapping(path = "/save", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public AccountTypeDAO save(@RequestBody AccountTypeDAO dao, HttpServletResponse response) {
-        try {
-            return service.save(dao);
-        } catch (RepositoryException e) {
-            try {
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            return null;
-        }
+    public AccountTypeDAO save(@RequestBody AccountTypeDAO dao) throws RepositoryException {
+        return service.save(dao);
+    }
+
+    @PostMapping(path = "/delete/{id}")
+    public boolean deleteById(@PathVariable Long id) throws RepositoryException {
+        return service.deleteById(id);
     }
 
 }

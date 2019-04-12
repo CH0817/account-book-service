@@ -12,11 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import tw.com.rex.accountbookservice.AccountBookServiceApplication;
-import tw.com.rex.accountbookservice.exception.RepositoryException;
 import tw.com.rex.accountbookservice.model.dao.AccountTypeDAO;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -41,11 +40,7 @@ public class AccountTypeControllerTest {
     public void saveSuccess() throws Exception {
         AccountTypeDAO dao = new AccountTypeDAO("test");
 
-        String daoJson = mapper.writeValueAsString(dao);
-
-        mvc.perform(post("/accountType/save")//
-                            .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)//
-                            .content(daoJson))//
+        mvc.perform(getJsonRequest("/accountType/save").content(mapper.writeValueAsString(dao)))//
                 .andExpect(status().isOk())//
                 .andDo(print())//
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))//
@@ -59,14 +54,14 @@ public class AccountTypeControllerTest {
     public void saveStatus500() throws Exception {
         AccountTypeDAO dao = new AccountTypeDAO("銀行");
 
-        String daoJson = mapper.writeValueAsString(dao);
-
-        mvc.perform(post("/accountType/save")//
-                            .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)//
-                            .content(daoJson))//
+        mvc.perform(getJsonRequest("/accountType/save").content(mapper.writeValueAsString(dao)))//
                 .andExpect(status().isInternalServerError())//
                 .andDo(print())//
                 .andExpect(jsonPath("$").doesNotExist());
+    }
+
+    private MockHttpServletRequestBuilder getJsonRequest(String url) {
+        return post(url).contentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
     }
 
     private static ObjectMapper getObjectMapper() {
