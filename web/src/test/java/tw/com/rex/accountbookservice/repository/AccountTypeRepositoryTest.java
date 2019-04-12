@@ -5,12 +5,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Example;
 import org.springframework.test.context.junit4.SpringRunner;
 import tw.com.rex.accountbookservice.model.dao.AccountTypeDAO;
 
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +33,7 @@ public class AccountTypeRepositoryTest {
         assertNotNull(dao.getId());
     }
 
-    @Test(expected = DataIntegrityViolationException.class)
+    @Test(expected = RuntimeException.class)
     public void saveDuplicate() {
         AccountTypeDAO entity = new AccountTypeDAO();
         entity.setName("銀行");
@@ -43,7 +41,7 @@ public class AccountTypeRepositoryTest {
         repository.save(entity);
     }
 
-    @Test(expected = DataIntegrityViolationException.class)
+    @Test(expected = RuntimeException.class)
     public void saveNotIntegrity() {
         repository.save(new AccountTypeDAO());
     }

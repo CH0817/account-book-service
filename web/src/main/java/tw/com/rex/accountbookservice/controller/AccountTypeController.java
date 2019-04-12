@@ -9,9 +9,6 @@ import tw.com.rex.accountbookservice.exception.RepositoryException;
 import tw.com.rex.accountbookservice.model.dao.AccountTypeDAO;
 import tw.com.rex.accountbookservice.service.AccountTypeService;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
 @RestController
 @RequestMapping("/accountType")
 public class AccountTypeController {

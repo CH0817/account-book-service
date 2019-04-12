@@ -1,6 +1,8 @@
 package tw.com.rex.accountbookservice.model.dao;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import tw.com.rex.accountbookservice.model.dao.base.BaseDAO;
 
 import javax.persistence.*;
@@ -15,6 +17,8 @@ import java.util.Objects;
 @AllArgsConstructor
 @Entity
 @Table(name = "account")
+@DynamicInsert
+@DynamicUpdate
 public class AccountDAO extends BaseDAO {
 
     @Column(name = "name", unique = true, nullable = false, length = 10)
