@@ -3,6 +3,8 @@ package tw.com.rex.accountbookservice.repository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.test.context.jdbc.Sql;
+import tw.com.rex.accountbookservice.define.CategoryTypeEnum;
 import tw.com.rex.accountbookservice.model.dao.CategoryDAO;
 import tw.com.rex.accountbookservice.repository.base.BaseRepositoryTest;
 
@@ -12,6 +14,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 
+@Sql("/db/data/test/data-category.sql")
 public class CategoryRepositoryTest extends BaseRepositoryTest {
 
     @Autowired
@@ -21,6 +24,7 @@ public class CategoryRepositoryTest extends BaseRepositoryTest {
     public void saveSuccess() {
         CategoryDAO entity = new CategoryDAO();
         entity.setName("test");
+        entity.setCategoryType(CategoryTypeEnum.INCOME.getCode());
         entity.setCreateDate(LocalDate.now());
         CategoryDAO dao = repository.save(entity);
         assertNotNull(dao.getId());
@@ -41,7 +45,7 @@ public class CategoryRepositoryTest extends BaseRepositoryTest {
 
     @Test
     public void findById() {
-        Optional<CategoryDAO> dao = repository.findById(1L);
+        Optional<CategoryDAO> dao = repository.findById(66L);
         assertTrue(dao.isPresent());
     }
 
@@ -54,13 +58,13 @@ public class CategoryRepositoryTest extends BaseRepositoryTest {
     @Test
     public void findAll() {
         List<CategoryDAO> all = repository.findAll();
-        assertEquals(3, all.size());
+        assertEquals(2, all.size());
     }
 
     @Test
     public void countById() {
         CategoryDAO entity = new CategoryDAO();
-        entity.setId(1L);
+        entity.setId(66L);
         long count = repository.count(Example.of(entity));
         assertEquals(1L, count);
     }
@@ -68,7 +72,7 @@ public class CategoryRepositoryTest extends BaseRepositoryTest {
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void updateSuccess() {
-        CategoryDAO dao = repository.findById(1L).get();
+        CategoryDAO dao = repository.findById(66L).get();
         dao.setName("test");
         dao.setUpdateDate(LocalDate.now());
 
@@ -76,5 +80,5 @@ public class CategoryRepositoryTest extends BaseRepositoryTest {
 
         assertEquals("test", result.getName());
     }
-    
+
 }
