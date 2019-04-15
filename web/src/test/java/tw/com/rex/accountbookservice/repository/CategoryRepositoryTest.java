@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.test.context.jdbc.Sql;
-import tw.com.rex.accountbookservice.define.CategoryTypeEnum;
+import tw.com.rex.accountbookservice.model.dao.define.CategoryTypeEnum;
 import tw.com.rex.accountbookservice.model.dao.CategoryDAO;
 import tw.com.rex.accountbookservice.repository.base.BaseRepositoryTest;
 

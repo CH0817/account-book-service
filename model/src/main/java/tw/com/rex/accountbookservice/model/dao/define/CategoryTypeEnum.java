@@ -1,4 +1,4 @@
-package tw.com.rex.accountbookservice.define;
+package tw.com.rex.accountbookservice.model.dao.define;
 
 import java.util.Objects;
 import java.util.stream.Stream;
