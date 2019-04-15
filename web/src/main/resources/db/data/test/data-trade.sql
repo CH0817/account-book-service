@@ -1,0 +1,1 @@
+INSERT INTO trade (id, account_id, item_id, transact_date, cost, create_date) SELECT 66, a.id, i.id, NOW(), 100, NOW() FROM account a, item i WHERE a.id = 66 AND i.id = 66;

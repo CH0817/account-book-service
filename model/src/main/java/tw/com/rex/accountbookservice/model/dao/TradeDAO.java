@@ -24,7 +24,7 @@ public class TradeDAO extends BaseDAO {
 
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
-    private AccountDAO accountDTO;
+    private AccountDAO account;
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
     private ItemDAO item;
