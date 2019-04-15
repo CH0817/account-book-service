@@ -15,7 +15,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 
-@Sql({"/db/data/test/data-account.sql"})
+@Sql({"/db/data/test/data-account_type.sql", "/db/data/test/data-currency.sql", "/db/data/test/data-account.sql"})
 public class AccountRepositoryTest extends BaseRepositoryTest {
 
     @Autowired
