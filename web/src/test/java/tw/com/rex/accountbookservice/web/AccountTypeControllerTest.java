@@ -1,23 +1,17 @@
 package tw.com.rex.accountbookservice.web;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import tw.com.rex.accountbookservice.controller.AccountTypeController;
 import tw.com.rex.accountbookservice.exception.RepositoryException;
 import tw.com.rex.accountbookservice.model.dao.AccountTypeDAO;
 import tw.com.rex.accountbookservice.service.AccountTypeService;
+import tw.com.rex.accountbookservice.web.base.BaseControllerTest;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -32,20 +26,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * only test web mvc
  */
-@RunWith(SpringRunner.class)
 @WebMvcTest(controllers = AccountTypeController.class)
-public class AccountTypeControllerTest {
+public class AccountTypeControllerTest extends BaseControllerTest {
 
     @Autowired
     private MockMvc mvc;
     @MockBean
     private AccountTypeService service;
-    private static ObjectMapper mapper;
-
-    @BeforeClass
-    public static void init() {
-        mapper = getObjectMapper();
-    }
 
     @Test
     public void saveSuccess() throws Exception {
@@ -204,14 +191,6 @@ public class AccountTypeControllerTest {
                 .andDo(print());
 
         verify(service, atLeastOnce()).findAll();
-    }
-
-    private static ObjectMapper getObjectMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new ParameterNamesModule())//
-                .registerModule(new Jdk8Module())//
-                .registerModule(new JavaTimeModule());
-        return mapper;
     }
 
 }
