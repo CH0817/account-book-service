@@ -3,6 +3,7 @@ package tw.com.rex.accountbookservice.repository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.test.context.jdbc.Sql;
 import tw.com.rex.accountbookservice.model.dao.CategoryDAO;
 import tw.com.rex.accountbookservice.model.dao.ItemDAO;
 import tw.com.rex.accountbookservice.repository.base.BaseRepositoryTest;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 
+@Sql({"/db/data/test/data-category.sql", "/db/data/test/data-item.sql"})
 public class ItemRepositoryTest extends BaseRepositoryTest {
 
     @Autowired
