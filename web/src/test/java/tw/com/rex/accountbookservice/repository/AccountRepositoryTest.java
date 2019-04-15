@@ -15,10 +15,15 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 
+@Sql({"/db/data/test/data-account.sql"})
 public class AccountRepositoryTest extends BaseRepositoryTest {
 
     @Autowired
     private AccountRepository repository;
+    @Autowired
+    private AccountTypeRepository accountTypeRepository;
+    @Autowired
+    private CurrencyRepository currencyRepository;
 
     @Test
     public void saveSuccess() {
@@ -43,7 +48,7 @@ public class AccountRepositoryTest extends BaseRepositoryTest {
 
     public AccountDAO getSaveEntity() {
         AccountDAO entity = new AccountDAO();
-        entity.setName("test");
+        entity.setName("XD");
         entity.setAccountType(getAccountTypeDAO());
         entity.setCurrency(getCurrencyDAO());
         entity.setCreateDate(LocalDate.now());
@@ -52,18 +57,17 @@ public class AccountRepositoryTest extends BaseRepositoryTest {
 
     public AccountTypeDAO getAccountTypeDAO() {
         AccountTypeDAO accountTypeDAO = new AccountTypeDAO();
-        accountTypeDAO.setId(1L);
+        accountTypeDAO.setId(66L);
         return accountTypeDAO;
     }
 
     public CurrencyDAO getCurrencyDAO() {
         CurrencyDAO currencyDAO = new CurrencyDAO();
-        currencyDAO.setId(1L);
+        currencyDAO.setId(66L);
         return currencyDAO;
     }
 
     @Test
-    @Sql({"/db/data/data-account.sql"})
     public void findById() {
         Optional<AccountDAO> dao = repository.findById(66L);
         assertTrue(dao.isPresent());
@@ -76,14 +80,12 @@ public class AccountRepositoryTest extends BaseRepositoryTest {
     }
 
     @Test
-    @Sql({"/db/data/data-account.sql"})
     public void findAll() {
         List<AccountDAO> all = repository.findAll();
         assertEquals(1, all.size());
     }
 
     @Test
-    @Sql({"/db/data/data-account.sql"})
     public void countById() {
         AccountDAO entity = new AccountDAO();
         entity.setId(66L);
@@ -93,7 +95,6 @@ public class AccountRepositoryTest extends BaseRepositoryTest {
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    @Sql({"/db/data/data-account.sql"})
     public void updateSuccess() {
         AccountDAO dao = repository.findById(66L).get();
         dao.setName("test");
@@ -102,6 +103,30 @@ public class AccountRepositoryTest extends BaseRepositoryTest {
         AccountDAO result = repository.saveAndFlush(dao);
 
         assertEquals("test", result.getName());
+    }
+
+    @Test
+    public void deleteByIdSuccess() {
+        repository.deleteById(66L);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void deleteByIdWithIdNotFound() {
+        repository.deleteById(111L);
+    }
+
+    @Test
+    public void deleteFromAccountType() {
+        accountTypeRepository.deleteById(66L);
+        Optional<AccountDAO> dao = repository.findById(66L);
+        assertFalse(dao.isPresent());
+    }
+
+    @Test
+    public void deleteFromCurrency() {
+        currencyRepository.deleteById(66L);
+        Optional<AccountDAO> dao = repository.findById(66L);
+        assertFalse(dao.isPresent());
     }
 
 }

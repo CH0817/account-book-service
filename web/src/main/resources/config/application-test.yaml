@@ -9,7 +9,6 @@ spring:
     username: rex
     password: ji394su3
     schema: classpath:/db/schema-mariadb.sql
-    data: classpath:/db/data-mariadb.sql
     initialization-mode: always
     sql-script-encoding: UTF-8
 logging:
