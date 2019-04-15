@@ -3,6 +3,7 @@ package tw.com.rex.accountbookservice.repository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.test.context.jdbc.Sql;
 import tw.com.rex.accountbookservice.model.dao.CurrencyDAO;
 import tw.com.rex.accountbookservice.repository.base.BaseRepositoryTest;
 
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 
+@Sql("/db/data/test/data-currency.sql")
 public class CurrencyRepositoryTest extends BaseRepositoryTest {
 
     @Autowired
@@ -41,7 +43,7 @@ public class CurrencyRepositoryTest extends BaseRepositoryTest {
 
     @Test
     public void findById() {
-        Optional<CurrencyDAO> dao = repository.findById(1L);
+        Optional<CurrencyDAO> dao = repository.findById(66L);
         assertTrue(dao.isPresent());
     }
 
@@ -60,7 +62,7 @@ public class CurrencyRepositoryTest extends BaseRepositoryTest {
     @Test
     public void countById() {
         CurrencyDAO entity = new CurrencyDAO();
-        entity.setId(1L);
+        entity.setId(66L);
         long count = repository.count(Example.of(entity));
         assertEquals(1L, count);
     }
@@ -68,7 +70,7 @@ public class CurrencyRepositoryTest extends BaseRepositoryTest {
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void updateSuccess() {
-        CurrencyDAO dao = repository.findById(1L).get();
+        CurrencyDAO dao = repository.findById(66L).get();
         dao.setName("test");
         dao.setUpdateDate(LocalDate.now());
 
