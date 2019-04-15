@@ -23,10 +23,10 @@ public class AccountDAO extends BaseDAO {
 
     @Column(name = "name", unique = true, nullable = false, length = 10)
     private String name;
-    @ManyToOne(targetEntity = AccountDAO.class)
+    @ManyToOne
     @JoinColumn(name = "account_type_id", nullable = false)
     private AccountTypeDAO accountType;
-    @ManyToOne(targetEntity = CurrencyDAO.class)
+    @ManyToOne
     @JoinColumn(name = "currency_id", nullable = false)
     private CurrencyDAO currency;
     @Column(name = "init_money", nullable = false)

@@ -20,7 +20,7 @@ public class ItemDAO extends BaseDAO {
 
     @Column(name = "name", unique = true, nullable = false, length = 10)
     private String name;
-    @ManyToOne(targetEntity = CategoryDAO.class)
+    @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private CategoryDAO category;
 

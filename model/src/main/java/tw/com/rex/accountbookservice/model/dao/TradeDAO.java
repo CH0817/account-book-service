@@ -22,10 +22,10 @@ import java.time.LocalDate;
 @DynamicUpdate
 public class TradeDAO extends BaseDAO {
 
-    @ManyToOne(targetEntity = AccountDAO.class)
+    @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
     private AccountDAO accountDTO;
-    @ManyToOne(targetEntity = ItemDAO.class)
+    @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
     private ItemDAO item;
     @Column(name = "note", length = 150)
