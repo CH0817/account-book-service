@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import tw.com.rex.accountbookservice.exception.RepositoryException;
-import tw.com.rex.accountbookservice.model.dao.AccountTypeDAO;
 import tw.com.rex.accountbookservice.model.dao.CurrencyDAO;
-import tw.com.rex.accountbookservice.service.AccountTypeService;
 import tw.com.rex.accountbookservice.service.CurrencyService;
 
 import java.util.List;

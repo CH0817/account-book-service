@@ -7,13 +7,25 @@ import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import tw.com.rex.accountbookservice.AccountBookServiceApplication;
+
+import javax.transaction.Transactional;
 
 @Ignore
 @RunWith(SpringRunner.class)
+@SpringBootTest(classes = AccountBookServiceApplication.class)
+@AutoConfigureMockMvc
+@Transactional
 public class BaseControllerTest {
 
     protected static ObjectMapper mapper;
+    @Autowired
+    protected MockMvc mvc;
 
     @BeforeClass
     public static void init() {
