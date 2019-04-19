@@ -29,7 +29,7 @@ public class CategoryDAO extends BaseDAO {
     private List<ItemDAO> items;
 
     public void setCategoryType(Integer categoryType) {
-        if (CategoryTypeEnum.isCategory(categoryType)) {
+        if (Objects.nonNull(categoryType) && CategoryTypeEnum.isCategory(categoryType)) {
             this.categoryType = categoryType;
         }
     }
