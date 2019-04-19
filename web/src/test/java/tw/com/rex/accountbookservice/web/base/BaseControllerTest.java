@@ -20,8 +20,11 @@ import tw.com.rex.accountbookservice.AccountBookServiceApplication;
 import tw.com.rex.accountbookservice.model.dao.define.ServerStatusCodeEnum;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -49,11 +52,22 @@ public class BaseControllerTest {
         return mapper;
     }
 
-    protected MockHttpServletRequestBuilder getPostJsonRequestBuilder(String uri, Object content)
+    protected MockHttpServletRequestBuilder postJsonRequest(String uri, Object content) throws JsonProcessingException {
+        return setJsonContent(setJsonContentType(post(uri)), content);
+    }
+
+    protected MockHttpServletRequestBuilder patchJsonRequest(String uri, Object content)
             throws JsonProcessingException {
-        return post(uri)//
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)//
-                .content(mapper.writeValueAsString(content));
+        return setJsonContent(setJsonContentType(patch(uri)), content);
+    }
+
+    private MockHttpServletRequestBuilder setJsonContentType(MockHttpServletRequestBuilder builder) {
+        return builder.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+    }
+
+    private MockHttpServletRequestBuilder setJsonContent(MockHttpServletRequestBuilder builder, Object content)
+            throws JsonProcessingException {
+        return builder.content(mapper.writeValueAsString(content));
     }
 
     protected ResultActions expectOkJsonRequest(ResultActions resultActions) throws Exception {
@@ -62,11 +76,16 @@ public class BaseControllerTest {
                 .andExpect(jsonPath("$.code", is(ServerStatusCodeEnum.SUCCESS.getCode())));
     }
 
-    protected ResultActions expectBadJsonRequest(ResultActions resultActions) throws Exception {
-        return resultActions.andExpect(status().isBadRequest())//
+    protected void expectBadJsonRequest(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isBadRequest())//
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))//
                 .andExpect(jsonPath("$.code", is(ServerStatusCodeEnum.DATABASE_FAIL.getCode())))//
                 .andExpect(jsonPath("$.errorMessage").exists());
+    }
+
+    protected String today() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return formatter.format(LocalDate.now());
     }
 
 }

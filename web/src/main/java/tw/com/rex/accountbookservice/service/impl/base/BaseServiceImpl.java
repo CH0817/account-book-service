@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.util.CollectionUtils;
 import tw.com.rex.accountbookservice.exception.RepositoryException;
 import tw.com.rex.accountbookservice.model.dao.base.BaseDAO;
@@ -62,19 +63,20 @@ public abstract class BaseServiceImpl<B extends JpaRepository, E extends BaseDAO
     }
 
     @Override
+    @Modifying(flushAutomatically = true)
     public E update(E entity) {
-        Long id = entity.getId();
-        String entitySimpleName = entity.getClass().getSimpleName();
-
-        E dao = findById(id);
-
-        BeanUtils.copyProperties(entity, dao, "id", "createDate");
-        dao.setUpdateDate(LocalDate.now());
+        // Long id = entity.getId();
+        // String entitySimpleName = entity.getClass().getSimpleName();
+        //
+        // E dao = findById(id);
+        //
+        // BeanUtils.copyProperties(entity, dao, "id", "createDate");
+        entity.setUpdateDate(LocalDate.now());
 
         try {
-            entity = (E) repository.save(dao);
+            entity = (E) repository.save(entity);
         } catch (Exception e) {
-            throw new RepositoryException("update " + entitySimpleName + " failure " + entity, e);
+            throw new RepositoryException("update " + entity.getClass().getSimpleName() + " failure " + entity, e);
         }
         return entity;
     }

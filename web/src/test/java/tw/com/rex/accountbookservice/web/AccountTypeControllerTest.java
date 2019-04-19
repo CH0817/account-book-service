@@ -19,16 +19,16 @@ public class AccountTypeControllerTest extends BaseControllerTest {
     @Test
     public void saveWithSuccess() throws Exception {
         expectOkJsonRequest(
-                mvc.perform(getPostJsonRequestBuilder("/accountType/save", new AccountTypeDAO("test_save"))))//
+                mvc.perform(postJsonRequest("/accountType/save", new AccountTypeDAO("test_save"))))//
                 .andExpect(jsonPath("$.code", is(1)))//
                 .andExpect(jsonPath("$.data.id").exists())//
                 .andExpect(jsonPath("$.data.name", is("test_save")))//
-                .andExpect(jsonPath("$.data.createDate").exists());
+                .andExpect(jsonPath("$.data.createDate", is(today())));
     }
 
     @Test
     public void saveWithDuplicateName() throws Exception {
-        expectBadJsonRequest(mvc.perform(getPostJsonRequestBuilder("/accountType/save", new AccountTypeDAO("銀行"))));
+        expectBadJsonRequest(mvc.perform(postJsonRequest("/accountType/save", new AccountTypeDAO("銀行"))));
     }
 
     @Test
@@ -54,13 +54,13 @@ public class AccountTypeControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("$.data.id", is(entity.getId().intValue())))//
                 .andExpect(jsonPath("$.data.name", is(entity.getName())))//
                 .andExpect(jsonPath("$.data.createDate").exists())//
-                .andExpect(jsonPath("$.data.updateDate").exists());
+                .andExpect(jsonPath("$.data.updateDate", is(today())));
     }
 
     @Test
     public void updateWithDuplicateName() throws Exception {
         AccountTypeDAO entity = new AccountTypeDAO();
-        entity.setId(1L);
+        entity.setId(77L);
         entity.setName("銀行");
         expectBadJsonRequest(mvc.perform(patch("/accountType/update")//
                                                  .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)//
