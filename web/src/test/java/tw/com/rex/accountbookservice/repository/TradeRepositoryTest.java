@@ -1,5 +1,6 @@
 package tw.com.rex.accountbookservice.repository;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -16,6 +17,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 
+@Ignore
 @Sql({"/db/data/test/data-account_type.sql", "/db/data/test/data-currency.sql", "/db/data/test/data-category.sql",
       "/db/data/test/data-item.sql", "/db/data/test/data-account.sql", "/db/data/test/data-trade.sql"})
 public class TradeRepositoryTest extends BaseRepositoryTest {
