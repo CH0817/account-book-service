@@ -1,5 +1,6 @@
 package tw.com.rex.accountbookservice.service;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -18,6 +19,7 @@ import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+@Ignore
 public class CurrencyServiceTest extends BaseServiceTest {
 
     @InjectMocks

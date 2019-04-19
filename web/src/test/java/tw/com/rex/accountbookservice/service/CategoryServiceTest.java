@@ -1,5 +1,6 @@
 package tw.com.rex.accountbookservice.service;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -17,6 +18,7 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+@Ignore
 public class CategoryServiceTest extends BaseServiceTest {
 
     @InjectMocks
