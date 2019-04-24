@@ -14,14 +14,17 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 @Table(name = "category")
 @DynamicInsert
 @DynamicUpdate
 public class CategoryDAO extends BaseDAO {
 
-    @Column(name = "name", unique = true, nullable = false, length = 10)
+    @NonNull
+    @Column(name = "name", nullable = false, length = 10)
     private String name;
+    @NonNull
     @Column(name = "category_type", nullable = false)
     private Integer categoryType;
     @OneToMany(cascade = CascadeType.ALL)
@@ -46,11 +49,11 @@ public class CategoryDAO extends BaseDAO {
             return false;
         }
         CategoryDAO that = (CategoryDAO) o;
-        return getName().equals(that.getName());
+        return name.equals(that.name) && categoryType.equals(that.categoryType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getName());
+        return Objects.hash(super.hashCode(), name, categoryType);
     }
 }

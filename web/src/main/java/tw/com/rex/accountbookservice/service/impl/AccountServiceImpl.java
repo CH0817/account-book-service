@@ -18,4 +18,9 @@ public class AccountServiceImpl extends BaseServiceImpl<AccountRepository, Accou
     public AccountServiceImpl(AccountRepository repository) {
         super(repository);
     }
+
+    @Override
+    public Boolean isDuplicate(AccountDAO entity) {
+        return true;
+    }
 }

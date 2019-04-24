@@ -18,17 +18,17 @@ public abstract class BaseController<S extends BaseService<E>, E extends BaseDAO
     }
 
     @PostMapping(path = "/save", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public ServerResponse<E> save(@RequestBody E dao) throws RepositoryException {
+    public ServerResponse<E> save(@RequestBody E dao) {
         return new ServerResponse<>(service.save(dao));
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    public ServerResponse<Boolean> deleteById(@PathVariable Long id) throws RepositoryException {
+    public ServerResponse<Boolean> deleteById(@PathVariable Long id) {
         return new ServerResponse<>(service.deleteById(id));
     }
 
     @PatchMapping(path = "/update", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public ServerResponse<E> update(@RequestBody E dao) throws RepositoryException {
+    public ServerResponse<E> update(@RequestBody E dao) {
         return new ServerResponse<>(service.update(dao));
     }
 

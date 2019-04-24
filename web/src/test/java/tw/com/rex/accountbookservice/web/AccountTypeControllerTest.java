@@ -28,7 +28,7 @@ public class AccountTypeControllerTest extends BaseControllerTest {
 
     @Test
     public void saveWithDuplicateName() throws Exception {
-        expectBadJsonRequest(mvc.perform(postJsonRequest("/accountType/save", new AccountTypeDAO("銀行"))));
+        expectDuplicateFailJsonRequest(mvc.perform(postJsonRequest("/accountType/save", new AccountTypeDAO("銀行"))));
     }
 
     @Test
@@ -39,7 +39,7 @@ public class AccountTypeControllerTest extends BaseControllerTest {
 
     @Test
     public void deleteByIdWithNotFoundId() throws Exception {
-        expectBadJsonRequest(mvc.perform(delete("/accountType/delete/{id}", 1L)));
+        expectDatabaseFailJsonRequest(mvc.perform(delete("/accountType/delete/{id}", 1L)));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class AccountTypeControllerTest extends BaseControllerTest {
         AccountTypeDAO entity = new AccountTypeDAO();
         entity.setId(77L);
         entity.setName("銀行");
-        expectBadJsonRequest(mvc.perform(patch("/accountType/update")//
+        expectDuplicateFailJsonRequest(mvc.perform(patch("/accountType/update")//
                                                  .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)//
                                                  .content(mapper.writeValueAsString(entity))));
     }
@@ -77,7 +77,7 @@ public class AccountTypeControllerTest extends BaseControllerTest {
 
     @Test
     public void findByIdNotFound() throws Exception {
-        expectBadJsonRequest(mvc.perform(get("/accountType/find/{id}", 1L))//
+        expectDatabaseFailJsonRequest(mvc.perform(get("/accountType/find/{id}", 1L))//
                                      .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)));
     }
 

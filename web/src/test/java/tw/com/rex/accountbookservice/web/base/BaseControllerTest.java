@@ -76,10 +76,19 @@ public class BaseControllerTest {
                 .andExpect(jsonPath("$.code", is(ServerStatusCodeEnum.SUCCESS.getCode())));
     }
 
-    protected void expectBadJsonRequest(ResultActions resultActions) throws Exception {
+    protected void expectDatabaseFailJsonRequest(ResultActions resultActions) throws Exception {
+        expectBadJsonRequest(resultActions, ServerStatusCodeEnum.DATABASE_FAIL);
+    }
+
+    protected void expectDuplicateFailJsonRequest(ResultActions resultActions) throws Exception {
+        expectBadJsonRequest(resultActions, ServerStatusCodeEnum.DUPLICATE);
+    }
+
+    private void expectBadJsonRequest(ResultActions resultActions, ServerStatusCodeEnum statusCodeEnum)
+            throws Exception {
         resultActions.andExpect(status().isBadRequest())//
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))//
-                .andExpect(jsonPath("$.code", is(ServerStatusCodeEnum.DATABASE_FAIL.getCode())))//
+                .andExpect(jsonPath("$.code", is(statusCodeEnum.getCode())))//
                 .andExpect(jsonPath("$.errorMessage").exists());
     }
 

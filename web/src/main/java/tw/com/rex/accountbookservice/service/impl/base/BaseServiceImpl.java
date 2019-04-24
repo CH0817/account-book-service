@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.util.CollectionUtils;
+import tw.com.rex.accountbookservice.exception.DataDuplicateException;
 import tw.com.rex.accountbookservice.exception.RepositoryException;
 import tw.com.rex.accountbookservice.model.dao.base.BaseDAO;
 import tw.com.rex.accountbookservice.service.base.BaseService;
@@ -31,6 +32,10 @@ public abstract class BaseServiceImpl<B extends JpaRepository, E extends BaseDAO
 
     @Override
     public E save(E entity) throws RepositoryException {
+        if (isDuplicate(entity)) {
+            throw new DataDuplicateException("insert data is duplicate");
+        }
+
         entity.setCreateDate(LocalDate.now());
         try {
             entity = (E) repository.save(entity);
@@ -65,6 +70,10 @@ public abstract class BaseServiceImpl<B extends JpaRepository, E extends BaseDAO
 
     @Override
     public E update(E entity) {
+        if (isDuplicate(entity)) {
+            throw new DataDuplicateException("update data is duplicate");
+        }
+
         E dao = findById(entity.getId());
 
         BeanUtils.copyProperties(entity, dao, "id", "createDate");
@@ -77,5 +86,7 @@ public abstract class BaseServiceImpl<B extends JpaRepository, E extends BaseDAO
         }
         return dao;
     }
+
+    protected abstract Boolean isDuplicate(E entity);
 
 }

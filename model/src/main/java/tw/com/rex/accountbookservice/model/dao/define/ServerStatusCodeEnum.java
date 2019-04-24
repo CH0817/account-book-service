@@ -2,6 +2,7 @@ package tw.com.rex.accountbookservice.model.dao.define;
 
 public enum ServerStatusCodeEnum {
     SUCCESS(1, "success"),//
+    DUPLICATE(997, "data is duplicate"),//
     DATABASE_FAIL(998, "execute SQL fail"),//
     FAIL(999, "fail");
     private Integer code;
