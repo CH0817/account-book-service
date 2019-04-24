@@ -48,7 +48,7 @@ public class CurrencyControllerTest extends BaseControllerTest {
     public void updateSuccess() throws Exception {
         CurrencyDAO entity = new CurrencyDAO();
         entity.setId(66L);
-        entity.setName("test_update");
+        entity.setName("test");
 
         expectOkJsonRequest(mvc.perform(patchJsonRequest("/currency/update", entity)))//
                 .andExpect(jsonPath("$.data.id").exists())//
