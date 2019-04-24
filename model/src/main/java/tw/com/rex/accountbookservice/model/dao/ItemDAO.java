@@ -1,6 +1,5 @@
 package tw.com.rex.accountbookservice.model.dao;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -31,11 +30,6 @@ public class ItemDAO extends BaseDAO {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "item_id")
     private List<TradeDAO> trades;
-
-    // @JsonBackReference
-    // public CategoryDAO getCategory() {
-    //     return category;
-    // }
 
     @Override
     public boolean equals(Object o) {

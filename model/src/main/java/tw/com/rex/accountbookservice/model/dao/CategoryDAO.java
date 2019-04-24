@@ -1,12 +1,10 @@
 package tw.com.rex.accountbookservice.model.dao;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import tw.com.rex.accountbookservice.model.dao.define.CategoryTypeEnum;
 import tw.com.rex.accountbookservice.model.dao.base.BaseDAO;
+import tw.com.rex.accountbookservice.model.dao.define.CategoryTypeEnum;
 
 import javax.persistence.*;
 import java.util.List;
@@ -29,7 +27,6 @@ public class CategoryDAO extends BaseDAO {
     @NonNull
     @Column(name = "category_type", nullable = false)
     private Integer categoryType;
-    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private List<ItemDAO> items;
