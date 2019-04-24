@@ -31,7 +31,7 @@ public abstract class BaseServiceImpl<B extends JpaRepository, E extends BaseDAO
     }
 
     @Override
-    public E save(E entity) throws RepositoryException {
+    public E save(E entity) {
         if (isDuplicate(entity)) {
             throw new DataDuplicateException("insert data is duplicate");
         }
@@ -46,7 +46,7 @@ public abstract class BaseServiceImpl<B extends JpaRepository, E extends BaseDAO
     }
 
     @Override
-    public boolean deleteById(long id) throws RepositoryException {
+    public boolean deleteById(long id) {
         try {
             repository.deleteById(id);
         } catch (RuntimeException e) {
