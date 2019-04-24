@@ -1,5 +1,6 @@
 package tw.com.rex.accountbookservice.model.dao;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -13,20 +14,28 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 @Table(name = "item")
 @DynamicInsert
 @DynamicUpdate
 public class ItemDAO extends BaseDAO {
 
+    @NonNull
     @Column(name = "name", unique = true, nullable = false, length = 10)
     private String name;
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private CategoryDAO category;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "item_id")
     private List<TradeDAO> trades;
+
+    // @JsonBackReference
+    // public CategoryDAO getCategory() {
+    //     return category;
+    // }
 
     @Override
     public boolean equals(Object o) {
@@ -40,11 +49,11 @@ public class ItemDAO extends BaseDAO {
             return false;
         }
         ItemDAO itemDAO = (ItemDAO) o;
-        return getName().equals(itemDAO.getName()) && getCategory().equals(itemDAO.getCategory());
+        return name.equals(itemDAO.name) && category.equals(itemDAO.category);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getName(), getCategory());
+        return Objects.hash(super.hashCode(), name, category);
     }
 }
