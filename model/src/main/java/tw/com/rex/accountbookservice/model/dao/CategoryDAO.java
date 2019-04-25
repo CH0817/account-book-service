@@ -1,6 +1,9 @@
 package tw.com.rex.accountbookservice.model.dao;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import tw.com.rex.accountbookservice.model.dao.base.BaseDAO;
@@ -13,23 +16,33 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@RequiredArgsConstructor
 @Entity
 @Table(name = "category")
 @DynamicInsert
 @DynamicUpdate
 public class CategoryDAO extends BaseDAO {
 
-    @NonNull
     @Column(name = "name", nullable = false, length = 10)
     private String name;
-    @NonNull
     @Column(name = "category_type", nullable = false)
     private Integer categoryType;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private List<ItemDAO> items;
+
+    public CategoryDAO(Long id) {
+        super(id);
+    }
+
+    public CategoryDAO(String name, Integer categoryType) {
+        this.name = name;
+        this.categoryType = categoryType;
+    }
+
+    public CategoryDAO(String name, CategoryTypeEnum categoryType) {
+        this.name = name;
+        this.categoryType = categoryType.getCode();
+    }
 
     public void setCategoryType(Integer categoryType) {
         if (Objects.nonNull(categoryType) && CategoryTypeEnum.isCategory(categoryType)) {
@@ -49,11 +62,11 @@ public class CategoryDAO extends BaseDAO {
             return false;
         }
         CategoryDAO that = (CategoryDAO) o;
-        return name.equals(that.name) && categoryType.equals(that.categoryType);
+        return name.equals(that.name) && categoryType.equals(that.categoryType) && Objects.equals(items, that.items);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, categoryType);
+        return Objects.hash(super.hashCode(), name, categoryType, items);
     }
 }

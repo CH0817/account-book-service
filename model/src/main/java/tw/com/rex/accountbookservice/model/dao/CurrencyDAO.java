@@ -1,6 +1,8 @@
 package tw.com.rex.accountbookservice.model.dao;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import tw.com.rex.accountbookservice.model.dao.base.BaseDAO;
@@ -12,20 +14,25 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@RequiredArgsConstructor
 @Entity
 @Table(name = "currency")
 @DynamicInsert
 @DynamicUpdate
 public class CurrencyDAO extends BaseDAO {
 
-    @NonNull
     @Column(name = "name", unique = true, nullable = false, length = 10)
     private String name;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "currency_id")
     private List<AccountDAO> accounts;
+
+    public CurrencyDAO(Long id) {
+        super(id);
+    }
+
+    public CurrencyDAO(String name) {
+        this.name = name;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -39,11 +46,11 @@ public class CurrencyDAO extends BaseDAO {
             return false;
         }
         CurrencyDAO that = (CurrencyDAO) o;
-        return getName().equals(that.getName());
+        return name.equals(that.name) && Objects.equals(accounts, that.accounts);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getName());
+        return Objects.hash(super.hashCode(), name, accounts);
     }
 }

@@ -1,8 +1,6 @@
 package tw.com.rex.accountbookservice.model.dao.base;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,9 +15,8 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @MappedSuperclass
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BaseDAO implements Serializable {
 
     @Id
@@ -29,6 +26,10 @@ public class BaseDAO implements Serializable {
     private LocalDate createDate;
     @Column(name = "update_date")
     private LocalDate updateDate;
+
+    public BaseDAO(Long id) {
+        this.id = id;
+    }
 
     @Override
     public String toString() {
@@ -44,8 +45,8 @@ public class BaseDAO implements Serializable {
             return false;
         }
         BaseDAO baseDAO = (BaseDAO) o;
-        return Objects.equals(id, baseDAO.id) && Objects.equals(createDate, baseDAO.createDate) && Objects.equals(
-                updateDate, baseDAO.updateDate);
+        return id.equals(baseDAO.id) && Objects.equals(createDate, baseDAO.createDate) && Objects.equals(updateDate,
+                                                                                                         baseDAO.updateDate);
     }
 
     @Override

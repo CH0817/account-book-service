@@ -1,6 +1,8 @@
 package tw.com.rex.accountbookservice.model.dao;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import tw.com.rex.accountbookservice.model.dao.base.BaseDAO;
@@ -14,7 +16,6 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "account")
 @DynamicInsert
@@ -43,6 +44,10 @@ public class AccountDAO extends BaseDAO {
     @JoinColumn(name = "account_id")
     private List<TradeDAO> transactions;
 
+    public AccountDAO(Long id) {
+        super(id);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -54,12 +59,16 @@ public class AccountDAO extends BaseDAO {
         if (!super.equals(o)) {
             return false;
         }
-        AccountDAO that = (AccountDAO) o;
-        return getName().equals(that.getName());
+        AccountDAO dao = (AccountDAO) o;
+        return name.equals(dao.name) && accountType.equals(dao.accountType) && currency.equals(dao.currency)
+               && Objects.equals(initMoney, dao.initMoney) && Objects.equals(currentMoney, dao.currentMoney)
+               && Objects.equals(closingDate, dao.closingDate) && Objects.equals(paymentDueDate, dao.paymentDueDate)
+               && Objects.equals(note, dao.note) && Objects.equals(transactions, dao.transactions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getName());
+        return Objects.hash(super.hashCode(), name, accountType, currency, initMoney, currentMoney, closingDate,
+                            paymentDueDate, note, transactions);
     }
 }
