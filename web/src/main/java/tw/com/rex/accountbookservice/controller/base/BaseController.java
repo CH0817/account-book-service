@@ -2,7 +2,6 @@ package tw.com.rex.accountbookservice.controller.base;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import tw.com.rex.accountbookservice.exception.RepositoryException;
 import tw.com.rex.accountbookservice.model.dao.base.BaseDAO;
 import tw.com.rex.accountbookservice.model.dao.response.ServerResponse;
 import tw.com.rex.accountbookservice.service.base.BaseService;
