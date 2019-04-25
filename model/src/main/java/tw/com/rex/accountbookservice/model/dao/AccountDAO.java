@@ -1,10 +1,9 @@
 package tw.com.rex.accountbookservice.model.dao;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 import tw.com.rex.accountbookservice.model.dao.base.BaseDAO;
 
 import javax.persistence.*;
@@ -18,15 +17,15 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Table(name = "account")
-@DynamicInsert
-@DynamicUpdate
 public class AccountDAO extends BaseDAO {
 
     @Column(name = "name", unique = true, nullable = false, length = 10)
     private String name;
+    @JsonIgnoreProperties("accounts")
     @ManyToOne
     @JoinColumn(name = "account_type_id", nullable = false)
     private AccountTypeDAO accountType;
+    @JsonIgnoreProperties("accounts")
     @ManyToOne
     @JoinColumn(name = "currency_id", nullable = false)
     private CurrencyDAO currency;
