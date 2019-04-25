@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import tw.com.rex.accountbookservice.exception.DataDuplicateException;
 import tw.com.rex.accountbookservice.exception.RepositoryException;
-import tw.com.rex.accountbookservice.model.dao.define.ServerStatusCodeEnum;
-import tw.com.rex.accountbookservice.model.dao.response.ServerResponse;
+import tw.com.rex.accountbookservice.model.define.ServerStatusCodeEnum;
+import tw.com.rex.accountbookservice.model.response.ServerResponse;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {

@@ -1,6 +1,6 @@
-package tw.com.rex.accountbookservice.model.dao.response;
+package tw.com.rex.accountbookservice.model.response;
 
-import tw.com.rex.accountbookservice.model.dao.define.ServerStatusCodeEnum;
+import tw.com.rex.accountbookservice.model.define.ServerStatusCodeEnum;
 
 import java.io.Serializable;
 

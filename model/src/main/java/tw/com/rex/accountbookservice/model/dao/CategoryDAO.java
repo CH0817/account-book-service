@@ -7,7 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import tw.com.rex.accountbookservice.model.dao.base.BaseDAO;
-import tw.com.rex.accountbookservice.model.dao.define.CategoryTypeEnum;
+import tw.com.rex.accountbookservice.model.define.CategoryTypeEnum;
 
 import javax.persistence.*;
 import java.util.List;

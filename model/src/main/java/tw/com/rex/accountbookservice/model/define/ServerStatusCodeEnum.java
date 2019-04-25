@@ -1,4 +1,4 @@
-package tw.com.rex.accountbookservice.model.dao.define;
+package tw.com.rex.accountbookservice.model.define;
 
 public enum ServerStatusCodeEnum {
     SUCCESS(1, "success"),//

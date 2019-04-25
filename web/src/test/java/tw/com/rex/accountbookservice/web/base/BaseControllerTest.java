@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import tw.com.rex.accountbookservice.AccountBookServiceApplication;
-import tw.com.rex.accountbookservice.model.dao.define.ServerStatusCodeEnum;
+import tw.com.rex.accountbookservice.model.define.ServerStatusCodeEnum;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
