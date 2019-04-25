@@ -20,7 +20,7 @@ import java.util.Objects;
 @DynamicUpdate
 public class ItemDAO extends BaseDAO {
 
-    @Column(name = "name", unique = true, nullable = false, length = 10)
+    @Column(name = "name", nullable = false, length = 10)
     private String name;
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
@@ -36,11 +36,6 @@ public class ItemDAO extends BaseDAO {
     public ItemDAO(String name, CategoryDAO category) {
         this.name = name;
         this.category = category;
-    }
-
-    public ItemDAO(String name, Long categoryId) {
-        this.name = name;
-        this.category = new CategoryDAO(categoryId);
     }
 
     @Override

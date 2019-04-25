@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS category
 CREATE TABLE IF NOT EXISTS item
 (
     id          BIGINT      NOT NULL AUTO_INCREMENT,
-    name        VARCHAR(10) NOT NULL UNIQUE,
+    name        VARCHAR(10) NOT NULL,
     category_id BIGINT      NOT NULL,
     create_date DATE        NOT NULL,
     update_date DATE,

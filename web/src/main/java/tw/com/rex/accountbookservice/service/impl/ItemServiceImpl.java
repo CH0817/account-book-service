@@ -2,6 +2,7 @@ package tw.com.rex.accountbookservice.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tw.com.rex.accountbookservice.exception.RepositoryException;
 import tw.com.rex.accountbookservice.model.dao.ItemDAO;
 import tw.com.rex.accountbookservice.repository.ItemRepository;
 import tw.com.rex.accountbookservice.service.ItemService;
@@ -22,9 +23,10 @@ public class ItemServiceImpl extends BaseServiceImpl<ItemRepository, ItemDAO> im
 
     @Override
     protected Boolean isDuplicate(ItemDAO entity) {
-        // if (Objects.isNull(entity.getCategory())) {
-        //     throw new RepositoryException("not set category");
-        // }
+        if (Objects.isNull(entity.getCategory())) {
+            throw new RepositoryException("not set category");
+        }
         return Objects.nonNull(repository.findByNameAndCategory(entity.getName(), entity.getCategory()));
     }
+
 }

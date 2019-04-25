@@ -28,20 +28,25 @@ public class ItemControllerTest extends BaseControllerTest {
         categoryDAO.setId(66L);
     }
 
-    // @Test
-    // public void saveIncomeTypeSuccess() throws Exception {
-    //     ItemDAO dao = new ItemDAO("test", categoryDAO);
-    //     expectOkJsonRequest(mvc.perform(postJsonRequest("/item/save", dao)))//
-    //             .andExpect(jsonPath("$.data.id").exists())//
-    //             .andExpect(jsonPath("$.data.name", is("test")))//
-    //             .andExpect(jsonPath("$.data.createDate", is(today())));
-    //
-    // }
+    @Test
+    public void saveSuccess() throws Exception {
+        ItemDAO dao = new ItemDAO("test", categoryDAO);
+        expectOkJsonRequest(mvc.perform(postJsonRequest("/item/save", dao)))//
+                .andExpect(jsonPath("$.data.id").exists())//
+                .andExpect(jsonPath("$.data.name", is("test")))//
+                .andExpect(jsonPath("$.data.createDate", is(today())));
+    }
+
+    @Test
+    public void saveWithNoCategory() throws Exception {
+        ItemDAO dao = new ItemDAO();
+        dao.setName("test");
+        expectDatabaseFailJsonRequest(mvc.perform(postJsonRequest("/item/save", dao)));
+    }
 
     @Test
     public void saveWithDuplicate() throws Exception {
-        ItemDAO dao = new ItemDAO("早餐", categoryDAO);
-        System.out.println(dao);
+        ItemDAO dao = new ItemDAO("早餐", new CategoryDAO(77L));
         expectDuplicateFailJsonRequest(mvc.perform(postJsonRequest("/item/save", dao)));
     }
 
@@ -71,10 +76,19 @@ public class ItemControllerTest extends BaseControllerTest {
     }
 
     @Test
+    public void updateWithNoCategory() throws Exception {
+        ItemDAO entity = new ItemDAO();
+        entity.setId(66L);
+        entity.setName("晚餐");
+        expectDatabaseFailJsonRequest(mvc.perform(patchJsonRequest("/item/update", entity)));
+    }
+
+    @Test
     public void updateWithDuplicate() throws Exception {
         ItemDAO entity = new ItemDAO();
         entity.setId(66L);
-        entity.setName("早餐");
+        entity.setName("晚餐");
+        entity.setCategory(new CategoryDAO(77L));
 
         expectDuplicateFailJsonRequest(mvc.perform(patchJsonRequest("/item/update", entity)));
     }
