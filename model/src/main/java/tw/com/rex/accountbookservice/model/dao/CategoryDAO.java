@@ -26,6 +26,7 @@ public class CategoryDAO extends BaseDAO {
     private String name;
     @Column(name = "category_type", nullable = false)
     private Integer categoryType;
+    @JsonIgnoreProperties("category")
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private List<ItemDAO> items;
