@@ -29,6 +29,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <start-class>tw.com.rex.accountbookservice.web.AccountBookServiceApplication</start-class>
+        <swagger.version>2.9.2</swagger.version>
+        <account.service.version>1.0-SNAPSHOT</account.service.version>
     </properties>
 
     <dependencyManagement>
@@ -36,17 +38,27 @@
             <dependency>
                 <groupId>tw.com.rex</groupId>
                 <artifactId>web</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${account.service.version}</version>
             </dependency>
             <dependency>
                 <groupId>tw.com.rex</groupId>
                 <artifactId>repository</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${account.service.version}</version>
             </dependency>
             <dependency>
                 <groupId>tw.com.rex</groupId>
                 <artifactId>model</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${account.service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
