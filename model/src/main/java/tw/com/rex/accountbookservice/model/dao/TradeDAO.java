@@ -3,8 +3,6 @@ package tw.com.rex.accountbookservice.model.dao;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 import tw.com.rex.accountbookservice.model.dao.base.BaseDAO;
 
 import javax.persistence.*;
@@ -17,8 +15,6 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Table(name = "trade")
-@DynamicInsert
-@DynamicUpdate
 public class TradeDAO extends BaseDAO {
 
     @ManyToOne

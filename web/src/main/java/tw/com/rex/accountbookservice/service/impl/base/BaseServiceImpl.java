@@ -50,7 +50,7 @@ public abstract class BaseServiceImpl<B extends JpaRepository, E extends BaseDAO
         try {
             repository.deleteById(id);
         } catch (RuntimeException e) {
-            throw new RepositoryException("delete id " + id + " failure", e);
+            throw new RepositoryException(e);
         }
         return true;
     }
@@ -82,7 +82,7 @@ public abstract class BaseServiceImpl<B extends JpaRepository, E extends BaseDAO
         try {
             dao = (E) repository.saveAndFlush(dao);
         } catch (Exception e) {
-            throw new RepositoryException("update " + entity.getClass().getSimpleName() + " failure " + entity, e);
+            throw new RepositoryException(e);
         }
         return dao;
     }
