@@ -13,55 +13,17 @@
     <groupId>tw.com.rex</groupId>
     <artifactId>account-book-service</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>war</packaging>
 
     <name>account-book-service</name>
-    <description>Demo project for Spring Boot</description>
-
-    <modules>
-        <module>web</module>
-        <module>repository</module>
-        <module>model</module>
-    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <start-class>tw.com.rex.accountbookservice.web.AccountBookServiceApplication</start-class>
         <swagger.version>2.9.2</swagger.version>
-        <account.service.version>1.0-SNAPSHOT</account.service.version>
+        <jbehave.version>4.4</jbehave.version>
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>tw.com.rex</groupId>
-                <artifactId>web</artifactId>
-                <version>${account.service.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>tw.com.rex</groupId>
-                <artifactId>repository</artifactId>
-                <version>${account.service.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>tw.com.rex</groupId>
-                <artifactId>model</artifactId>
-                <version>${account.service.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
         <!--Spring-->
@@ -79,10 +41,57 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--Servlet-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--JBehave-->
+        <dependency>
+            <groupId>org.jbehave</groupId>
+            <artifactId>jbehave-core</artifactId>
+            <version>${jbehave.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jbehave</groupId>
+            <artifactId>jbehave-spring</artifactId>
+            <version>${jbehave.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jbehave</groupId>
+            <artifactId>jbehave-gherkin</artifactId>
+            <version>${jbehave.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!--Swagger-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
         <!--Lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.6</version>
+            <scope>provided</scope>
             <optional>true</optional>
         </dependency>
         <!--Apache-->
@@ -90,6 +99,12 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.8.1</version>
+        </dependency>
+        <!--MariaDB driver-->
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>2.2.0</version>
         </dependency>
     </dependencies>
 
@@ -124,7 +139,6 @@
                 <filtering>true</filtering>
                 <excludes>
                     <exclude>**/application*.yaml</exclude>
-                    <exclude>db/data/test/*.sql</exclude>
                 </excludes>
             </resource>
             <resource>
@@ -133,7 +147,6 @@
                 <includes>
                     <include>**/application.yaml</include>
                     <include>**/application-${profileActive}.yaml</include>
-                    <include>db/data/${profileActive}/*.sql</include>
                 </includes>
             </resource>
         </resources>
@@ -148,6 +161,15 @@
                     </additionalProperties>
                     <!--缺少此段在執行 package 的時候會出現 cannot find symbol 的錯誤-->
                     <classifier>exec</classifier>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <!--解決中文亂碼導致測試失敗-->
+                    <argLine>-Dfile.encoding=UTF-8</argLine>
                 </configuration>
             </plugin>
         </plugins>
