@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS account_type
     create_date DATE        NOT NULL,
     update_date DATE,
     PRIMARY KEY (id)
-);
+) ENGINE = InnoDB
+  CHARACTER SET UTF8;
 
 CREATE TABLE IF NOT EXISTS currency
 (
@@ -21,7 +22,8 @@ CREATE TABLE IF NOT EXISTS currency
     create_date DATE        NOT NULL,
     update_date DATE,
     PRIMARY KEY (id)
-);
+) ENGINE = InnoDB
+  CHARACTER SET UTF8;
 
 CREATE TABLE IF NOT EXISTS account
 (
@@ -39,7 +41,8 @@ CREATE TABLE IF NOT EXISTS account
     PRIMARY KEY (id),
     FOREIGN KEY (account_type_id) REFERENCES account_type (id),
     FOREIGN KEY (currency_id) REFERENCES currency (id)
-);
+) ENGINE = InnoDB
+  CHARACTER SET UTF8;
 
 CREATE TABLE IF NOT EXISTS category
 (
@@ -49,7 +52,8 @@ CREATE TABLE IF NOT EXISTS category
     create_date   DATE        NOT NULL,
     update_date   DATE,
     PRIMARY KEY (id)
-);
+) ENGINE = InnoDB
+  CHARACTER SET UTF8;
 
 CREATE TABLE IF NOT EXISTS item
 (
@@ -60,7 +64,8 @@ CREATE TABLE IF NOT EXISTS item
     update_date DATE,
     PRIMARY KEY (id),
     FOREIGN KEY (category_id) REFERENCES category (id)
-);
+) ENGINE = InnoDB
+  CHARACTER SET UTF8;
 
 CREATE TABLE IF NOT EXISTS trade
 (
@@ -75,4 +80,5 @@ CREATE TABLE IF NOT EXISTS trade
     PRIMARY KEY (id),
     FOREIGN KEY (account_id) REFERENCES account (id),
     FOREIGN KEY (item_id) REFERENCES item (id)
-);
+) ENGINE = InnoDB
+  CHARACTER SET UTF8;

@@ -1,9 +1,11 @@
 spring:
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://220.132.15.117:3306/account_book
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://220.132.15.117:3306/account_book?useUnicode=true&characterEncoding=utf8
     username: rex
     password: ji3cp4su3F*+++
+    initialization-mode: never
+    sql-script-encoding: UTF-8
 logging:
   level:
     org:
@@ -11,4 +13,4 @@ logging:
         type:
           descriptor:
             sql:
-              BasicBinder: error
+              BasicBinder: trace
