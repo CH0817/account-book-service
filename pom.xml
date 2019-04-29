@@ -139,6 +139,7 @@
     </profiles>
 
     <build>
+        <finalName>account-book-service</finalName>
         <resources>
             <resource>
                 <directory>${basedir}/src/main/resources</directory>
@@ -165,14 +166,11 @@
                         <encoding.source>UTF-8</encoding.source>
                         <encoding.reporting>UTF-8</encoding.reporting>
                     </additionalProperties>
-                    <!--缺少此段在執行 package 的時候會出現 cannot find symbol 的錯誤-->
-                    <classifier>exec</classifier>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version>
                 <configuration>
                     <!--解決中文亂碼導致測試失敗-->
                     <argLine>-Dfile.encoding=UTF-8</argLine>
