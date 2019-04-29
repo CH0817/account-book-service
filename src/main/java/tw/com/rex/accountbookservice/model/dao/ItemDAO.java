@@ -1,5 +1,6 @@
 package tw.com.rex.accountbookservice.model.dao;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,11 +19,14 @@ import java.util.Objects;
 @Table(name = "item")
 public class ItemDAO extends BaseDAO {
 
+    @ApiModelProperty(value = "name of the item, max length 10", required = true)
     @Column(name = "name", nullable = false, length = 10)
     private String name;
+    @ApiModelProperty(value = "category of the item", required = true)
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private CategoryDAO category;
+    @ApiModelProperty("trades of the item")
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "item_id")
     private List<TradeDAO> trades;

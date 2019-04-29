@@ -1,6 +1,7 @@
 package tw.com.rex.accountbookservice.model.dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,26 +22,35 @@ import java.util.Objects;
 @Table(name = "account")
 public class AccountDAO extends BaseDAO {
 
+    @ApiModelProperty(value = "account name, max length 10", required = true)
     @Column(name = "name", unique = true, nullable = false, length = 10)
     private String name;
+    @ApiModelProperty(value = "account type", required = true)
     @JsonIgnoreProperties("accounts")
     @ManyToOne
     @JoinColumn(name = "account_type_id", nullable = false)
     private AccountTypeDAO accountType;
+    @ApiModelProperty(value = "account currency", required = true)
     @JsonIgnoreProperties("accounts")
     @ManyToOne
     @JoinColumn(name = "currency_id", nullable = false)
     private CurrencyDAO currency;
+    @ApiModelProperty(value = "initialization money when the account created", required = true)
     @Column(name = "init_money", nullable = false)
     private BigDecimal initMoney;
+    @ApiModelProperty(value = "current money", required = true)
     @Column(name = "current_money", nullable = false)
     private BigDecimal currentMoney;
+    @ApiModelProperty("account closing date")
     @Column(name = "closing_date")
     private LocalDate closingDate;
+    @ApiModelProperty("account payment due date")
     @Column(name = "payment_due_date")
     private LocalDate paymentDueDate;
+    @ApiModelProperty("account's note")
     @Column(name = "note", length = 150)
     private String note;
+    @ApiModelProperty("trades in the account")
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
     private List<TradeDAO> transactions;

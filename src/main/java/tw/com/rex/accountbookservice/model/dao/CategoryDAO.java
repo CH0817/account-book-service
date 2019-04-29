@@ -1,6 +1,7 @@
 package tw.com.rex.accountbookservice.model.dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,10 +21,13 @@ import java.util.Objects;
 @Table(name = "category")
 public class CategoryDAO extends BaseDAO {
 
+    @ApiModelProperty(value = "category name, max length 10", required = true)
     @Column(name = "name", nullable = false, length = 10)
     private String name;
+    @ApiModelProperty(value = "category type", required = true)
     @Column(name = "category_type", nullable = false)
     private Integer categoryType;
+    @ApiModelProperty("items in the category")
     @JsonIgnoreProperties("category")
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")

@@ -1,6 +1,7 @@
 package tw.com.rex.accountbookservice.model.dao.base;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,11 +20,14 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BaseDAO implements Serializable {
 
+    @ApiModelProperty("primary key, auto create when insert")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ApiModelProperty("data create date, generate when insert")
     @Column(name = "create_date", nullable = false)
     private LocalDate createDate;
+    @ApiModelProperty("data update date, generate when update")
     @Column(name = "update_date")
     private LocalDate updateDate;
 

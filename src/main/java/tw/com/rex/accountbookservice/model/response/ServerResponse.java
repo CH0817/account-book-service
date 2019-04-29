@@ -1,14 +1,20 @@
 package tw.com.rex.accountbookservice.model.response;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import tw.com.rex.accountbookservice.define.ServerStatusCodeEnum;
 
 import java.io.Serializable;
 
-@SuppressWarnings("unused")
+@SuppressWarnings("unused`")
+@ApiModel(description = "API executed response")
 public class ServerResponse<R> implements Serializable {
 
+    @ApiModelProperty("status code from server executed")
     private ServerStatusCodeEnum code = ServerStatusCodeEnum.SUCCESS;
+    @ApiModelProperty("response data from server")
     private R data;
+    @ApiModelProperty("error message when response code are not 1")
     private String errorMessage;
 
     public ServerResponse() { }
