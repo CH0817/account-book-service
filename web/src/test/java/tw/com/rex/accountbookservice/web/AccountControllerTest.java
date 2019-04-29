@@ -3,9 +3,9 @@ package tw.com.rex.accountbookservice.web;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.context.jdbc.Sql;
-import tw.com.rex.accountbookservice.model.dao.AccountDAO;
-import tw.com.rex.accountbookservice.model.dao.AccountTypeDAO;
-import tw.com.rex.accountbookservice.model.dao.CurrencyDAO;
+import tw.com.rex.accountbookservice.dao.AccountDAO;
+import tw.com.rex.accountbookservice.dao.AccountTypeDAO;
+import tw.com.rex.accountbookservice.dao.CurrencyDAO;
 import tw.com.rex.accountbookservice.model.define.ServerStatusCodeEnum;
 import tw.com.rex.accountbookservice.web.base.BaseControllerTest;
 
@@ -17,7 +17,8 @@ import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Sql({"/db/data/test/data-currency.sql", "/db/data/test/data-account_type.sql", "/db/data/test/data-account.sql"})
 public class AccountControllerTest extends BaseControllerTest {

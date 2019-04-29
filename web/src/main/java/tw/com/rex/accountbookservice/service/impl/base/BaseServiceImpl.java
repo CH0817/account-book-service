@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.util.CollectionUtils;
+import tw.com.rex.accountbookservice.dao.base.BaseDAO;
 import tw.com.rex.accountbookservice.exception.DataDuplicateException;
 import tw.com.rex.accountbookservice.exception.RepositoryException;
-import tw.com.rex.accountbookservice.model.dao.base.BaseDAO;
 import tw.com.rex.accountbookservice.service.base.BaseService;
 
 import javax.transaction.Transactional;

@@ -1,4 +1,4 @@
-package tw.com.rex.accountbookservice.model.dao.base;
+package tw.com.rex.accountbookservice.dao.base;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
@@ -44,7 +44,8 @@ public class BaseDAO implements Serializable {
         if (!(o instanceof BaseDAO)) {
             return false;
         }
-        BaseDAO baseDAO = (BaseDAO) o;
+        BaseDAO
+                baseDAO = (BaseDAO) o;
         return id.equals(baseDAO.id) && Objects.equals(createDate, baseDAO.createDate) && Objects.equals(updateDate,
                                                                                                          baseDAO.updateDate);
     }

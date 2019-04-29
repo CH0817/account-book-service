@@ -2,8 +2,8 @@ package tw.com.rex.accountbookservice.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tw.com.rex.accountbookservice.dao.ItemDAO;
 import tw.com.rex.accountbookservice.exception.RepositoryException;
-import tw.com.rex.accountbookservice.model.dao.ItemDAO;
 import tw.com.rex.accountbookservice.repository.ItemRepository;
 import tw.com.rex.accountbookservice.service.ItemService;
 import tw.com.rex.accountbookservice.service.impl.base.BaseServiceImpl;

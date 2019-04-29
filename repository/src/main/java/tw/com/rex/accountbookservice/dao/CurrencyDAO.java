@@ -1,10 +1,10 @@
-package tw.com.rex.accountbookservice.model.dao;
+package tw.com.rex.accountbookservice.dao;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
-import tw.com.rex.accountbookservice.model.dao.base.BaseDAO;
+import tw.com.rex.accountbookservice.dao.base.BaseDAO;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,20 +15,20 @@ import java.util.Objects;
 @NoArgsConstructor
 @DynamicInsert
 @Entity
-@Table(name = "account_type")
-public class AccountTypeDAO extends BaseDAO {
+@Table(name = "currency")
+public class CurrencyDAO extends BaseDAO {
 
     @Column(name = "name", unique = true, nullable = false, length = 10)
     private String name;
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "account_type_id")
+    @JoinColumn(name = "currency_id")
     private List<AccountDAO> accounts;
 
-    public AccountTypeDAO(Long id) {
+    public CurrencyDAO(Long id) {
         super(id);
     }
 
-    public AccountTypeDAO(String name) {
+    public CurrencyDAO(String name) {
         this.name = name;
     }
 
@@ -37,14 +37,14 @@ public class AccountTypeDAO extends BaseDAO {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof AccountTypeDAO)) {
+        if (!(o instanceof CurrencyDAO)) {
             return false;
         }
         if (!super.equals(o)) {
             return false;
         }
-        AccountTypeDAO dao = (AccountTypeDAO) o;
-        return name.equals(dao.name) && Objects.equals(accounts, dao.accounts);
+        CurrencyDAO that = (CurrencyDAO) o;
+        return name.equals(that.name) && Objects.equals(accounts, that.accounts);
     }
 
     @Override

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tw.com.rex.accountbookservice.controller.base.BaseController;
-import tw.com.rex.accountbookservice.model.dao.AccountDAO;
+import tw.com.rex.accountbookservice.dao.AccountDAO;
 import tw.com.rex.accountbookservice.service.AccountService;
 
 @RestController

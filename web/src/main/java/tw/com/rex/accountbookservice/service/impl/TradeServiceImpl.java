@@ -2,7 +2,7 @@ package tw.com.rex.accountbookservice.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tw.com.rex.accountbookservice.model.dao.TradeDAO;
+import tw.com.rex.accountbookservice.dao.TradeDAO;
 import tw.com.rex.accountbookservice.repository.TradeRepository;
 import tw.com.rex.accountbookservice.service.TradeService;
 import tw.com.rex.accountbookservice.service.impl.base.BaseServiceImpl;

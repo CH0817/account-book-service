@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import tw.com.rex.accountbookservice.model.dao.CategoryDAO;
+import tw.com.rex.accountbookservice.dao.CategoryDAO;
 import tw.com.rex.accountbookservice.model.define.CategoryTypeEnum;
 import tw.com.rex.accountbookservice.web.base.BaseControllerTest;
 

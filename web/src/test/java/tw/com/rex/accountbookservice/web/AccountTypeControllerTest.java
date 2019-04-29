@@ -3,7 +3,7 @@ package tw.com.rex.accountbookservice.web;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
-import tw.com.rex.accountbookservice.model.dao.AccountTypeDAO;
+import tw.com.rex.accountbookservice.dao.AccountTypeDAO;
 import tw.com.rex.accountbookservice.web.base.BaseControllerTest;
 
 import static org.hamcrest.Matchers.hasSize;

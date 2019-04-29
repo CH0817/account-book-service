@@ -3,9 +3,9 @@ package tw.com.rex.accountbookservice.web;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.context.jdbc.Sql;
-import tw.com.rex.accountbookservice.model.dao.AccountDAO;
-import tw.com.rex.accountbookservice.model.dao.ItemDAO;
-import tw.com.rex.accountbookservice.model.dao.TradeDAO;
+import tw.com.rex.accountbookservice.dao.AccountDAO;
+import tw.com.rex.accountbookservice.dao.ItemDAO;
+import tw.com.rex.accountbookservice.dao.TradeDAO;
 import tw.com.rex.accountbookservice.model.define.ServerStatusCodeEnum;
 import tw.com.rex.accountbookservice.web.base.BaseControllerTest;
 

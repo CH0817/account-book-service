@@ -1,6 +1,6 @@
 package tw.com.rex.accountbookservice.service.base;
 
-import tw.com.rex.accountbookservice.model.dao.base.BaseDAO;
+import tw.com.rex.accountbookservice.dao.base.BaseDAO;
 
 import java.util.List;
 
