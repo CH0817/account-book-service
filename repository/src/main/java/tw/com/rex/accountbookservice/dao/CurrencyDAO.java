@@ -24,14 +24,6 @@ public class CurrencyDAO extends BaseDAO {
     @JoinColumn(name = "currency_id")
     private List<AccountDAO> accounts;
 
-    public CurrencyDAO(Long id) {
-        super(id);
-    }
-
-    public CurrencyDAO(String name) {
-        this.name = name;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

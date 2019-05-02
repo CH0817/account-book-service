@@ -27,15 +27,6 @@ public class ItemDAO extends BaseDAO {
     @JoinColumn(name = "item_id")
     private List<TradeDAO> trades;
 
-    public ItemDAO(Long id) {
-        super(id);
-    }
-
-    public ItemDAO(String name, CategoryDAO category) {
-        this.name = name;
-        this.category = category;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

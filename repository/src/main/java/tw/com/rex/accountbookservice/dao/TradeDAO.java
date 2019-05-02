@@ -32,10 +32,6 @@ public class TradeDAO extends BaseDAO {
     @Column(name = "cost", precision = 10, scale = 2, nullable = false)
     private BigDecimal cost;
 
-    public TradeDAO(Long id) {
-        super(id);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

@@ -45,10 +45,6 @@ public class AccountDAO extends BaseDAO {
     @JoinColumn(name = "account_id")
     private List<TradeDAO> transactions;
 
-    public AccountDAO(Long id) {
-        super(id);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

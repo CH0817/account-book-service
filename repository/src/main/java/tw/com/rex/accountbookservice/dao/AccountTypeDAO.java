@@ -24,14 +24,6 @@ public class AccountTypeDAO extends BaseDAO {
     @JoinColumn(name = "account_type_id")
     private List<AccountDAO> accounts;
 
-    public AccountTypeDAO(Long id) {
-        super(id);
-    }
-
-    public AccountTypeDAO(String name) {
-        this.name = name;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

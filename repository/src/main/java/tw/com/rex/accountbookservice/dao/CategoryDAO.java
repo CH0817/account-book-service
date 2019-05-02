@@ -29,10 +29,6 @@ public class CategoryDAO extends BaseDAO {
     @JoinColumn(name = "category_id")
     private List<ItemDAO> items;
 
-    public CategoryDAO(Long id) {
-        super(id);
-    }
-
     public CategoryDAO(String name, Integer categoryType) {
         this.name = name;
         this.categoryType = categoryType;
