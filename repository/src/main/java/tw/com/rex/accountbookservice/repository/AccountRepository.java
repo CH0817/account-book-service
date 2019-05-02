@@ -10,5 +10,4 @@ public interface AccountRepository extends JpaRepository<AccountDAO, String> {
 
     AccountDAO findByNameAndAccountType(String name, AccountTypeDAO accountType);
 
-    AccountDAO findByNameAndAccountTypeAndIdNot(String name, AccountTypeDAO accountType, String id);
 }
