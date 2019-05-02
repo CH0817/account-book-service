@@ -9,5 +9,4 @@ public interface CategoryRepository extends JpaRepository<CategoryDAO, Long> {
 
     CategoryDAO findByNameAndCategoryType(String name, Integer categoryType);
 
-    CategoryDAO findByName(String name);
 }
