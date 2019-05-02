@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import tw.com.rex.accountbookservice.dao.AccountTypeDAO;
 
 @Repository
-public interface AccountTypeRepository extends JpaRepository<AccountTypeDAO, Long> {
+public interface AccountTypeRepository extends JpaRepository<AccountTypeDAO, String> {
 
     AccountTypeDAO findByName(String name);
 

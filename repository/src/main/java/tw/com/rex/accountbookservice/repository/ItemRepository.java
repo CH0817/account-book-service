@@ -6,7 +6,7 @@ import tw.com.rex.accountbookservice.dao.CategoryDAO;
 import tw.com.rex.accountbookservice.dao.ItemDAO;
 
 @Repository
-public interface ItemRepository extends JpaRepository<ItemDAO, Long> {
+public interface ItemRepository extends JpaRepository<ItemDAO, String> {
 
     ItemDAO findByNameAndCategory(String name, CategoryDAO category);
 }

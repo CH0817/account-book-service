@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import tw.com.rex.accountbookservice.dao.CurrencyDAO;
 
 @Repository
-public interface CurrencyRepository extends JpaRepository<CurrencyDAO, Long> {
+public interface CurrencyRepository extends JpaRepository<CurrencyDAO, String> {
 
     CurrencyDAO findByName(String name);
 

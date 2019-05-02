@@ -5,4 +5,4 @@ import org.springframework.stereotype.Repository;
 import tw.com.rex.accountbookservice.dao.TradeDAO;
 
 @Repository
-public interface TradeRepository extends JpaRepository<TradeDAO, Long> {}
+public interface TradeRepository extends JpaRepository<TradeDAO, String> {}

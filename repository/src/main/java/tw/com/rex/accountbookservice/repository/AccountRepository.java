@@ -6,9 +6,9 @@ import tw.com.rex.accountbookservice.dao.AccountDAO;
 import tw.com.rex.accountbookservice.dao.AccountTypeDAO;
 
 @Repository
-public interface AccountRepository extends JpaRepository<AccountDAO, Long> {
+public interface AccountRepository extends JpaRepository<AccountDAO, String> {
 
     AccountDAO findByNameAndAccountType(String name, AccountTypeDAO accountType);
 
-    AccountDAO findByNameAndAccountTypeAndIdNot(String name, AccountTypeDAO accountType, Long id);
+    AccountDAO findByNameAndAccountTypeAndIdNot(String name, AccountTypeDAO accountType, String id);
 }
