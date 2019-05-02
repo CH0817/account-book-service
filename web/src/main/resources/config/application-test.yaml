@@ -8,9 +8,9 @@ spring:
     url: jdbc:mariadb://192.168.56.1:3333/account_book
     username: rex
     password: ji394su3
-    schema: classpath:/db/schema-mariadb.sql
-    initialization-mode: always
-    sql-script-encoding: UTF-8
+  jpa:
+    hibernate:
+      ddl-auto: update
 logging:
   level:
     org:
