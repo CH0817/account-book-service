@@ -46,7 +46,7 @@ public abstract class BaseServiceImpl<B extends JpaRepository, E extends BaseDAO
     }
 
     @Override
-    public boolean deleteById(long id) {
+    public boolean deleteById(String id) {
         try {
             repository.deleteById(id);
         } catch (RuntimeException e) {
@@ -56,7 +56,7 @@ public abstract class BaseServiceImpl<B extends JpaRepository, E extends BaseDAO
     }
 
     @Override
-    public E findById(long id) {
+    public E findById(String id) {
         Optional<E> result = repository.findById(id);
         return (result.isPresent()) ? result.get() : result.orElseThrow(
                 () -> new RepositoryException("cannot find " + eClass.getSimpleName() + " by id: " + id));

@@ -32,8 +32,10 @@ public class AccountServiceImpl extends BaseServiceImpl<AccountRepository, Accou
     }
 
     private Boolean isDuplicateForUpdate(AccountDAO entity) {
-        return Objects.nonNull(
-                repository.findByNameAndAccountTypeAndIdNot(entity.getName(), entity.getAccountType(), entity.getId()));
+        // return Objects.nonNull(
+        //         repository.findByNameAndAccountTypeAndIdNot(entity.getName(), entity.getAccountType(), entity.getId()));
+        // FIXME
+        return true;
     }
 
 }

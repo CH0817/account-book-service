@@ -17,12 +17,12 @@ public abstract class BaseController<S extends BaseService<E>, E extends BaseDAO
     }
 
     @PostMapping(path = "/save", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public ServerResponse<E> save(@RequestBody E dao) {
+    public ServerResponse<E> save(@RequestBody E dao) throws Exception {
         return new ServerResponse<>(service.save(dao));
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    public ServerResponse<Boolean> deleteById(@PathVariable Long id) {
+    public ServerResponse<Boolean> deleteById(@PathVariable String id) {
         return new ServerResponse<>(service.deleteById(id));
     }
 
@@ -32,7 +32,7 @@ public abstract class BaseController<S extends BaseService<E>, E extends BaseDAO
     }
 
     @GetMapping("/find/{id}")
-    public ServerResponse<E> findById(@PathVariable Long id) {
+    public ServerResponse<E> findById(@PathVariable String id) {
         return new ServerResponse<>(service.findById(id));
     }
 

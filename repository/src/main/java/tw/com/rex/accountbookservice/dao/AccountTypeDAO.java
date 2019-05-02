@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
+import tw.com.rex.accountbookservice.annotation.NecessaryData;
 import tw.com.rex.accountbookservice.dao.base.BaseDAO;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ import java.util.Objects;
 @Table(name = "account_type")
 public class AccountTypeDAO extends BaseDAO {
 
+    @NecessaryData(useIn = {NecessaryData.DLL.SAVE, NecessaryData.DLL.UPDATE})
     @Column(name = "name", unique = true, nullable = false, length = 10)
     private String name;
     @OneToMany(cascade = CascadeType.ALL)
@@ -35,8 +37,7 @@ public class AccountTypeDAO extends BaseDAO {
         if (!super.equals(o)) {
             return false;
         }
-        AccountTypeDAO
-                dao = (AccountTypeDAO) o;
+        AccountTypeDAO dao = (AccountTypeDAO) o;
         return name.equals(dao.name) && Objects.equals(accounts, dao.accounts);
     }
 

@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface BaseService<E extends BaseDAO> {
 
-    E save(E entity);
+    E save(E entity) throws Exception;
 
-    boolean deleteById(long id);
+    boolean deleteById(String id);
 
-    E findById(long id);
+    E findById(String id);
 
     List<E> findAll();
 
