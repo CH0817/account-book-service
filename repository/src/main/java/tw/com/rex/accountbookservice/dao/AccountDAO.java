@@ -18,10 +18,10 @@ import java.util.Objects;
 @NoArgsConstructor
 @DynamicInsert
 @Entity
-@Table(name = "account")
+@Table(name = "account", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "account_type_id"})})
 public class AccountDAO extends BaseDAO {
 
-    @Column(name = "name", unique = true, nullable = false, length = 10)
+    @Column(name = "name", nullable = false, length = 10)
     private String name;
     @JsonIgnoreProperties("accounts")
     @ManyToOne
@@ -31,9 +31,9 @@ public class AccountDAO extends BaseDAO {
     @ManyToOne
     @JoinColumn(name = "currency_id", nullable = false)
     private CurrencyDAO currency;
-    @Column(name = "init_money", nullable = false)
+    @Column(name = "init_money")
     private BigDecimal initMoney;
-    @Column(name = "current_money", nullable = false)
+    @Column(name = "current_money")
     private BigDecimal currentMoney;
     @Column(name = "closing_date")
     private LocalDate closingDate;
