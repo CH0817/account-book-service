@@ -2,9 +2,6 @@ package tw.com.rex.accountbookservice.exception;
 
 public class RepositoryException extends RuntimeException {
 
-    public RepositoryException() {
-    }
-
     public RepositoryException(Throwable cause) {
         super(cause);
     }

@@ -4,19 +4,17 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.util.CollectionUtils;
 import tw.com.rex.accountbookservice.dao.AccountTypeDAO;
-import tw.com.rex.accountbookservice.exception.RepositoryException;
+import tw.com.rex.accountbookservice.exception.LackNecessaryDataException;
+import tw.com.rex.accountbookservice.exception.NotFoundDataException;
 import tw.com.rex.accountbookservice.repository.AccountTypeRepository;
 import tw.com.rex.accountbookservice.service.base.BaseServiceTest;
 import tw.com.rex.accountbookservice.service.impl.AccountTypeServiceImpl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class AccountTypeServiceTest extends BaseServiceTest {
@@ -36,88 +34,67 @@ public class AccountTypeServiceTest extends BaseServiceTest {
         dao.setId("a");
         dao.setName("test");
         dao.setCreateDate(LocalDate.now());
+        dao.setAccounts(new ArrayList<>());
     }
 
     @Test
-    public void save() throws Exception {
-        // FIXME 這兒
-        when(repository.save(any(AccountTypeDAO.class))).thenReturn(dao);
+    public void save() {
+        when(repository.save(entity)).thenReturn(dao);
         service.save(entity);
         verify(repository, atLeastOnce()).save(any(AccountTypeDAO.class));
     }
 
-    @Test(expected = RepositoryException.class)
-    public void saveThrowException() throws Exception {
-        doThrow(RepositoryException.class).when(repository).save(any(AccountTypeDAO.class));
+    @Test(expected = LackNecessaryDataException.class)
+    public void saveThrowException() {
         service.save(new AccountTypeDAO());
-        verify(repository, atLeastOnce()).save(any(AccountTypeDAO.class));
     }
 
     @Test
     public void deleteById() {
-        // given when
-        boolean result = service.deleteById("a");
-        // then
+        service.deleteById("a");
         verify(repository, atLeastOnce()).deleteById("a");
-        assertTrue("delete id " + 1L + " failure", result);
-    }
-
-    @Test(expected = RepositoryException.class)
-    public void deleteByIdThrowException() {
-        // given
-        doThrow(RepositoryException.class).when(repository).deleteById(anyString());
-        // when
-        boolean result = service.deleteById("a");
-        // then
-        verify(repository, atLeastOnce()).deleteById("a");
-        assertFalse("delete id " + 1L + " failure", result);
     }
 
     @Test
     public void findById() {
-        // given
-        // when
         when(repository.findById(anyString())).thenReturn(Optional.of(dao));
         service.findById("a");
-        // then
+        verify(repository, atLeastOnce()).findById(anyString());
+    }
+
+    @Test(expected = NotFoundDataException.class)
+    public void findByIdThrowNotFoundDataException() {
+        service.findById("a");
         verify(repository, atLeastOnce()).findById(anyString());
     }
 
     @Test
     public void findAll() {
-        // given
-        ArrayList<AccountTypeDAO> daoList = new ArrayList<>();
-        daoList.add(dao);
-        // when
-        when(repository.findAll()).thenReturn(daoList);
-        List<AccountTypeDAO> accountTypes = service.findAll();
-        // then
+        service.findAll();
         verify(repository, atLeastOnce()).findAll();
-        assertFalse(CollectionUtils.isEmpty(accountTypes));
     }
 
     @Test
     public void update() {
-        // given
-        // when
-        when(repository.findById(anyString())).thenReturn(Optional.of(dao));
-        when(repository.save(any(AccountTypeDAO.class))).thenReturn(dao);
-        service.update(dao);
-        // then
-        verify(repository, atLeastOnce()).findById(anyString());
+        when(repository.findById("a")).thenReturn(Optional.of(dao));
+        entity.setId("a");
+        entity.setName("test_name");
+        service.update(entity);
         verify(repository, atLeastOnce()).save(any(AccountTypeDAO.class));
     }
 
-    @Test(expected = RepositoryException.class)
-    public void updateThrowException() {
-        // given
-        // when
-        doThrow(RepositoryException.class).when(repository).save(any(AccountTypeDAO.class));
-        when(repository.findById(anyString())).thenReturn(Optional.of(dao));
-        service.update(dao);
-        // then
-        verify(repository, atLeastOnce()).findById(anyString());
-        verify(repository, atLeastOnce()).save(any(AccountTypeDAO.class));
+    @Test(expected = LackNecessaryDataException.class)
+    public void updateThrowLackNecessaryDataException() {
+        when(repository.findById("a")).thenReturn(Optional.of(dao));
+        entity.setId("a");
+        entity.setName("");
+        service.update(entity);
+    }
+
+    @Test(expected = NotFoundDataException.class)
+    public void updateThrowNotFoundDataException() {
+        entity.setId("a");
+        service.update(entity);
     }
 
 }

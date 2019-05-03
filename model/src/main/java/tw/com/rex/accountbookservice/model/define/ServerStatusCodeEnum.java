@@ -2,6 +2,8 @@ package tw.com.rex.accountbookservice.model.define;
 
 public enum ServerStatusCodeEnum {
     SUCCESS(1, "success"),//
+    LACK_NECESSARY_DATA(996, "lack necessary data"),//
+    NOT_FOUND(996, "cannot found data from DB"),//
     DUPLICATE(997, "data is duplicate"),//
     DATABASE_FAIL(998, "execute SQL fail"),//
     FAIL(999, "fail");

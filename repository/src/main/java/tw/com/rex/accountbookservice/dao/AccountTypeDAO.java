@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import tw.com.rex.accountbookservice.annotation.NecessaryData;
 import tw.com.rex.accountbookservice.dao.base.BaseDAO;
 
@@ -17,6 +18,7 @@ import java.util.Objects;
 @DynamicInsert
 @Entity
 @Table(name = "account_type")
+@DynamicUpdate
 public class AccountTypeDAO extends BaseDAO {
 
     @NecessaryData(useIn = {NecessaryData.DLL.SAVE, NecessaryData.DLL.UPDATE})

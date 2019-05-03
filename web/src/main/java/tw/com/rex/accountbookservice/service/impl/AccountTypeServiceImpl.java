@@ -1,20 +1,26 @@
 package tw.com.rex.accountbookservice.service.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tw.com.rex.accountbookservice.annotation.NecessaryData;
 import tw.com.rex.accountbookservice.dao.AccountTypeDAO;
+import tw.com.rex.accountbookservice.dao.base.BaseDAO;
 import tw.com.rex.accountbookservice.exception.LackNecessaryDataException;
+import tw.com.rex.accountbookservice.exception.NotFoundDataException;
+import tw.com.rex.accountbookservice.model.define.ServerStatusCodeEnum;
 import tw.com.rex.accountbookservice.repository.AccountTypeRepository;
 import tw.com.rex.accountbookservice.service.AccountTypeService;
 
 import javax.transaction.Transactional;
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.function.Supplier;
 
 @Service
 @Transactional
@@ -28,56 +34,106 @@ public class AccountTypeServiceImpl implements AccountTypeService {
     }
 
     @Override
-    public AccountTypeDAO save(AccountTypeDAO entity) throws Exception {
-        AccountTypeDAO dao = null;
-        if (checkNecessaryData(entity, NecessaryData.DLL.SAVE)) {
-            dao = repository.save(entity);
-        }
-        return dao;
+    public AccountTypeDAO save(AccountTypeDAO entity) {
+        entity.setCreateDate(LocalDate.now());
+        checkNecessaryData(entity, NecessaryData.DLL.SAVE);
+        return repository.save(entity);
     }
 
     @Override
     public boolean deleteById(String id) {
-        return false;
+        repository.deleteById(id);
+        return true;
     }
 
     @Override
     public AccountTypeDAO findById(String id) {
-        return null;
+        return repository.findById(id).orElseThrow(() -> new NotFoundDataException("cannot found by id: " + id));
     }
 
     @Override
     public List<AccountTypeDAO> findAll() {
-        return null;
+        return repository.findAll();
     }
 
     @Override
     public AccountTypeDAO update(AccountTypeDAO entity) {
-        return null;
+        AccountTypeDAO dao = findById(entity.getId());
+        copyProperties(entity, dao, "id", "createDate");
+        dao.setUpdateDate(LocalDate.now());
+        checkNecessaryData(dao, NecessaryData.DLL.UPDATE);
+        return repository.save(entity);
     }
 
-    private boolean checkNecessaryData(AccountTypeDAO entity, NecessaryData.DLL useIn)
-            throws LackNecessaryDataException, NoSuchMethodException, InvocationTargetException,
-                   IllegalAccessException {
-        Class<?> clz = entity.getClass();
-        Class<?> superclass = entity.getClass().getSuperclass();
-        System.out.println(superclass);
-        Field[] fields = clz.getDeclaredFields();
-        for (Field field : fields) {
-            NecessaryData annotation = field.getAnnotation(NecessaryData.class);
-            if (Objects.nonNull(annotation)) {
-                NecessaryData.DLL[] dlls = annotation.useIn();
-                if (Arrays.asList(dlls).contains(useIn)) {
-                    String name = field.getName();
-                    String getter = "get" + Character.toUpperCase(name.charAt(0)) + name.substring(1);
-                    Method method = clz.getMethod(getter);
-                    Object invoke = method.invoke(entity);
-                    if (Objects.isNull(invoke)) {
-                        throw new LackNecessaryDataException(name + " must have value");
+    private <E> void copyProperties(E source, E target, String... ignores) {
+        List<PropertyDescriptor> sourcePropertyDescriptors = getPropertyDescriptorsFromClass(source.getClass(),
+                                                                                             ignores);
+        sourcePropertyDescriptors//
+                .forEach(p -> {
+                    try {
+                        Method method = target.getClass().getMethod(p.getWriteMethod().getName(), p.getPropertyType());
+                        Object value = p.getReadMethod().invoke(source);
+                        if (Objects.nonNull(value)) {
+                            method.invoke(target, value);
+                        }
+                    } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                });
+    }
+
+    private List<PropertyDescriptor> getPropertyDescriptorsFromClass(Class<?> clz, String... ignores) {
+        return getPropertyDescriptorsFromClass(clz, ArrayList::new, ignores);
+    }
+
+    private List<PropertyDescriptor> getPropertyDescriptorsFromClass(Class<?> clz,
+                                                                     Supplier<List<PropertyDescriptor>> supplier,
+                                                                     String... ignores) {
+        List<String> ignoreList = (Objects.nonNull(ignores)) ? Arrays.asList(ignores) : Collections.emptyList();
+        List<PropertyDescriptor> result = supplier.get();
+        if (!clz.getSimpleName().equalsIgnoreCase("Object")) {
+            for (Field field : clz.getDeclaredFields()) {
+                try {
+                    String fieldName = field.getName();
+                    if (!ignoreList.contains(fieldName)) {
+                        result.add(new PropertyDescriptor(fieldName, clz));
+                    }
+                } catch (IntrospectionException e) {
+                    e.printStackTrace();
+                }
+            }
+            getPropertyDescriptorsFromClass(clz.getSuperclass(), () -> result, ignores);
+        }
+        return result;
+    }
+
+    private <E extends BaseDAO> void checkNecessaryData(E entity, NecessaryData.DLL useIn) {
+        checkNecessaryData(entity, entity.getClass(), useIn);
+    }
+
+    private void checkNecessaryData(Object entity, Class<?> clz, NecessaryData.DLL useIn) {
+        if (!clz.getSimpleName().equalsIgnoreCase("Object")) {
+            Field[] fields = clz.getDeclaredFields();
+            for (Field field : fields) {
+                NecessaryData annotation = field.getAnnotation(NecessaryData.class);
+                if (Objects.nonNull(annotation) && Arrays.asList(annotation.useIn()).contains(useIn)) {
+                    String fieldName = field.getName();
+                    String getter = "get" + Character.toUpperCase(fieldName.charAt(0)) + fieldName.substring(1);
+                    try {
+                        Object value = clz.getMethod(getter).invoke(entity);
+                        String typeName = field.getType().getSimpleName();
+                        if (Objects.isNull(value) || typeName.equalsIgnoreCase("String") && StringUtils.isBlank(
+                                (String) value)) {
+                            throw new LackNecessaryDataException(fieldName + " must have value",
+                                                                 ServerStatusCodeEnum.LACK_NECESSARY_DATA);
+                        }
+                    } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                        e.printStackTrace();
                     }
                 }
             }
+            checkNecessaryData(entity, clz.getSuperclass(), useIn);
         }
-        return true;
     }
+
 }

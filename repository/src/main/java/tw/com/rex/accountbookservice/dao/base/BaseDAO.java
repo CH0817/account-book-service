@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.GenericGenerator;
+import tw.com.rex.accountbookservice.annotation.NecessaryData;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,13 +21,16 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BaseDAO implements Serializable {
 
+    @NecessaryData(useIn = {NecessaryData.DLL.UPDATE, NecessaryData.DLL.DELETE})
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "id", length = 36, nullable = false, unique = true)
     private String id;
+    @NecessaryData(useIn = NecessaryData.DLL.SAVE)
     @Column(name = "create_date", nullable = false)
     private LocalDate createDate;
+    @NecessaryData(useIn = NecessaryData.DLL.UPDATE)
     @Column(name = "update_date")
     private LocalDate updateDate;
 

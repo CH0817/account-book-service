@@ -17,7 +17,7 @@ public abstract class BaseController<S extends BaseService<E>, E extends BaseDAO
     }
 
     @PostMapping(path = "/save", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public ServerResponse<E> save(@RequestBody E dao) throws Exception {
+    public ServerResponse<E> save(@RequestBody E dao) {
         return new ServerResponse<>(service.save(dao));
     }
 
