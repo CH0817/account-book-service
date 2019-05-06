@@ -13,9 +13,10 @@ import tw.com.rex.accountbookservice.service.impl.AccountTypeServiceImpl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class AccountTypeServiceTest extends BaseServiceTest {
@@ -53,15 +54,17 @@ public class AccountTypeServiceTest extends BaseServiceTest {
 
     @Test
     public void deleteById() {
-        service.deleteById("a");
+        boolean result = service.deleteById("a");
         verify(repository, atLeastOnce()).deleteById("a");
+        assertTrue(result);
     }
 
     @Test
     public void findById() {
         when(repository.findById(anyString())).thenReturn(Optional.of(dao));
-        service.findById("a");
+        AccountTypeDAO result = service.findById("a");
         verify(repository, atLeastOnce()).findById(anyString());
+        assertNotNull(result);
     }
 
     @Test(expected = NotFoundDataException.class)
@@ -72,8 +75,14 @@ public class AccountTypeServiceTest extends BaseServiceTest {
 
     @Test
     public void findAll() {
-        service.findAll();
+        List<AccountTypeDAO> daoList = new ArrayList<>();
+        daoList.add(dao);
+        daoList.add(dao);
+        daoList.add(dao);
+        when(repository.findAll()).thenReturn(daoList);
+        List<AccountTypeDAO> result = service.findAll();
         verify(repository, atLeastOnce()).findAll();
+        assertEquals(3, result.size());
     }
 
     @Test
