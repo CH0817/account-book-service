@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 public class AccountTypeServiceTest extends BaseServiceTest {
@@ -40,8 +41,9 @@ public class AccountTypeServiceTest extends BaseServiceTest {
     @Test
     public void save() {
         when(repository.save(entity)).thenReturn(dao);
-        service.save(entity);
+        AccountTypeDAO result = service.save(entity);
         verify(repository, atLeastOnce()).save(any(AccountTypeDAO.class));
+        assertNotNull(result.getId());
     }
 
     @Test(expected = LackNecessaryDataException.class)
@@ -79,8 +81,10 @@ public class AccountTypeServiceTest extends BaseServiceTest {
         when(repository.findById("a")).thenReturn(Optional.of(dao));
         entity.setId("a");
         entity.setName("test_name");
-        service.update(entity);
+        when(repository.save(any(AccountTypeDAO.class))).thenReturn(entity);
+        AccountTypeDAO result = service.update(entity);
         verify(repository, atLeastOnce()).save(any(AccountTypeDAO.class));
+        assertNotNull(result);
     }
 
     @Test(expected = LackNecessaryDataException.class)
