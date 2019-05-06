@@ -10,14 +10,8 @@ import tw.com.rex.accountbookservice.service.AccountTypeService;
 import tw.com.rex.accountbookservice.util.CRUDUtils;
 
 import javax.transaction.Transactional;
-import java.beans.IntrospectionException;
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.time.LocalDate;
-import java.util.*;
-import java.util.function.Supplier;
+import java.util.List;
 
 @Service
 @Transactional
@@ -56,52 +50,10 @@ public class AccountTypeServiceImpl implements AccountTypeService {
     @Override
     public AccountTypeDAO update(AccountTypeDAO entity) {
         AccountTypeDAO dao = findById(entity.getId());
-        copyProperties(entity, dao, "id", "createDate");
+        CRUDUtils.copyProperties(entity, dao, "id", "createDate");
         dao.setUpdateDate(LocalDate.now());
         CRUDUtils.checkNecessaryData(dao, NecessaryData.DLL.UPDATE);
         return repository.save(entity);
-    }
-
-    private <E> void copyProperties(E source, E target, String... ignores) {
-        List<PropertyDescriptor> sourcePropertyDescriptors = getPropertyDescriptorsFromClass(source.getClass(),
-                                                                                             ignores);
-        sourcePropertyDescriptors//
-                .forEach(p -> {
-                    try {
-                        Method method = target.getClass().getMethod(p.getWriteMethod().getName(), p.getPropertyType());
-                        Object value = p.getReadMethod().invoke(source);
-                        if (Objects.nonNull(value)) {
-                            method.invoke(target, value);
-                        }
-                    } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                        e.printStackTrace();
-                    }
-                });
-    }
-
-    private List<PropertyDescriptor> getPropertyDescriptorsFromClass(Class<?> clz, String... ignores) {
-        return getPropertyDescriptorsFromClass(clz, ArrayList::new, ignores);
-    }
-
-    private List<PropertyDescriptor> getPropertyDescriptorsFromClass(Class<?> clz,
-                                                                     Supplier<List<PropertyDescriptor>> supplier,
-                                                                     String... ignores) {
-        List<String> ignoreList = (Objects.nonNull(ignores)) ? Arrays.asList(ignores) : Collections.emptyList();
-        List<PropertyDescriptor> result = supplier.get();
-        if (!clz.getSimpleName().equalsIgnoreCase("Object")) {
-            for (Field field : clz.getDeclaredFields()) {
-                try {
-                    String fieldName = field.getName();
-                    if (!ignoreList.contains(fieldName)) {
-                        result.add(new PropertyDescriptor(fieldName, clz));
-                    }
-                } catch (IntrospectionException e) {
-                    e.printStackTrace();
-                }
-            }
-            getPropertyDescriptorsFromClass(clz.getSuperclass(), () -> result, ignores);
-        }
-        return result;
     }
 
 }
