@@ -53,7 +53,7 @@ public class AccountTypeServiceImpl implements AccountTypeService {
         CRUDUtils.copyProperties(entity, dao, "id", "createDate");
         dao.setUpdateDate(LocalDate.now());
         CRUDUtils.checkNecessaryData(dao, NecessaryData.DLL.UPDATE);
-        return repository.save(entity);
+        return repository.save(dao);
     }
 
 }
