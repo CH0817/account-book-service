@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
+import tw.com.rex.accountbookservice.annotation.NecessaryData;
 import tw.com.rex.accountbookservice.dao.base.BaseDAO;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ import java.util.Objects;
 @Table(name = "currency")
 public class CurrencyDAO extends BaseDAO {
 
+    @NecessaryData(useIn = {NecessaryData.DLL.SAVE, NecessaryData.DLL.UPDATE})
     @Column(name = "name", unique = true, nullable = false, length = 10)
     private String name;
     @OneToMany(cascade = CascadeType.ALL)
