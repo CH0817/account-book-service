@@ -125,6 +125,7 @@
                 <excludes>
                     <exclude>**/application*.yaml</exclude>
                     <exclude>db/data/test/*.sql</exclude>
+                    <exclude>generatorConfig.xml</exclude>
                 </excludes>
             </resource>
             <resource>
