@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS `currency`;
 
 CREATE TABLE IF NOT EXISTS account_type
 (
-    id          BIGINT      NOT NULL AUTO_INCREMENT,
+    id          VARCHAR(36) NOT NULL,
     name        VARCHAR(10) NOT NULL UNIQUE,
     create_date DATE        NOT NULL,
     update_date DATE,
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS account_type
 
 CREATE TABLE IF NOT EXISTS currency
 (
-    id          BIGINT      NOT NULL AUTO_INCREMENT,
+    id          VARCHAR(36) NOT NULL,
     name        VARCHAR(10) NOT NULL UNIQUE,
     create_date DATE        NOT NULL,
     update_date DATE,
@@ -25,10 +25,10 @@ CREATE TABLE IF NOT EXISTS currency
 
 CREATE TABLE IF NOT EXISTS account
 (
-    id               BIGINT      NOT NULL AUTO_INCREMENT,
+    id               VARCHAR(36) NOT NULL,
     name             VARCHAR(10) NOT NULL UNIQUE,
-    account_type_id  BIGINT      NOT NULL,
-    currency_id      BIGINT      NOT NULL,
+    account_type_id  VARCHAR(36) NOT NULL,
+    currency_id      VARCHAR(36) NOT NULL,
     init_money       DECIMAL(9, 2),
     current_money    DECIMAL(9, 2),
     closing_date     DATE,
@@ -43,9 +43,9 @@ CREATE TABLE IF NOT EXISTS account
 
 CREATE TABLE IF NOT EXISTS category
 (
-    id            BIGINT      NOT NULL AUTO_INCREMENT,
+    id            VARCHAR(36) NOT NULL,
     name          VARCHAR(10) NOT NULL,
-    category_type BIGINT      NOT NULL,
+    category_type INT         NOT NULL,
     create_date   DATE        NOT NULL,
     update_date   DATE,
     PRIMARY KEY (id)
@@ -53,9 +53,9 @@ CREATE TABLE IF NOT EXISTS category
 
 CREATE TABLE IF NOT EXISTS item
 (
-    id          BIGINT      NOT NULL AUTO_INCREMENT,
+    id          VARCHAR(36) NOT NULL,
     name        VARCHAR(10) NOT NULL,
-    category_id BIGINT      NOT NULL,
+    category_id VARCHAR(36) NOT NULL,
     create_date DATE        NOT NULL,
     update_date DATE,
     PRIMARY KEY (id),
@@ -64,9 +64,9 @@ CREATE TABLE IF NOT EXISTS item
 
 CREATE TABLE IF NOT EXISTS trade
 (
-    id            BIGINT        NOT NULL AUTO_INCREMENT,
-    account_id    BIGINT        NOT NULL,
-    item_id       BIGINT        NOT NULL,
+    id            VARCHAR(36)   NOT NULL,
+    account_id    VARCHAR(36)   NOT NULL,
+    item_id       VARCHAR(36)   NOT NULL,
     transact_date DATE          NOT NULL,
     cost          DECIMAL(9, 2) NOT NULL,
     note          VARCHAR(150),
