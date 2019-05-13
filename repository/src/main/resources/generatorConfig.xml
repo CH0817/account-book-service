@@ -7,7 +7,7 @@
     <classPathEntry
             location="C:\Users\Rex\.IntelliJIdea2019.1\config\jdbc-drivers\MariaDB Connector J\2.4.1\mariadb-java-client-2.4.1.jar"/>
 
-    <context id="mysql" defaultModelType="flat" targetRuntime="MyBatis3Simple">
+    <context id="mysql" defaultModelType="flat">
         <property name="javaFileEncoding" value="UTF-8"/>
         <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
         <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
@@ -26,7 +26,9 @@
         </javaTypeResolver>
 
         <javaModelGenerator targetPackage="tw.com.rex.accountbookservice.model.dao"
-                            targetProject="D:\Projects\Java\account-book-service\model\src\main\java"/>
+                            targetProject="D:\Projects\Java\account-book-service\model\src\main\java">
+            <property name="rootClass" value="tw.com.rex.accountbookservice.model.dao.base.BaseDao"/>
+        </javaModelGenerator>
 
         <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources"/>
 
@@ -34,7 +36,7 @@
                              targetProject="src/main/java"/>
 
         <table tableName="account_type" enableCountByExample="false" enableSelectByExample="false"
-               enableUpdateByExample="false">
+               enableDeleteByExample="false" enableUpdateByExample="false">
             <property name="ignoreQualifiersAtRuntime" value="true"/>
         </table>
     </context>
