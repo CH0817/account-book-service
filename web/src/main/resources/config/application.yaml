@@ -17,3 +17,6 @@ spring:
       ddl-auto: none
 logging:
   config: classpath:log/logback.xml
+mybatis:
+  type-aliases-package: tw.com.rex.accountbookservice.model.dao.base
+  mapper-locations: mapper/*.xml
