@@ -8,15 +8,14 @@ spring:
     basename: i18n/messages
   jackson:
     default-property-inclusion: non_null
-  jpa:
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
-    hibernate:
-      ddl-auto: none
 logging:
   config: classpath:log/logback.xml
+  level:
+    tw:
+      com:
+        rex:
+          accountbookservice:
+            mapper: debug
 mybatis:
   type-aliases-package: tw.com.rex.accountbookservice.model.dao.base
   mapper-locations: mapper/*.xml

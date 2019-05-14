@@ -8,15 +8,3 @@ spring:
     url: jdbc:mariadb://192.168.56.1:3333/account_book
     username: rex
     password: ji394su3
-    schema: classpath:/db/schema-mariadb.sql
-    data: classpath:/db/data/dev/data-mariadb.sql
-    initialization-mode: always
-    sql-script-encoding: UTF-8
-logging:
-  level:
-    org:
-      hibernate:
-        type:
-          descriptor:
-            sql:
-              BasicBinder: trace
