@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
+import tw.com.rex.accountbookservice.mapper.base.BaseMapperTest;
 import tw.com.rex.accountbookservice.model.dao.Trade;
 
 import java.math.BigDecimal;
@@ -16,12 +17,9 @@ import java.util.Date;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-@RunWith(SpringRunner.class)
-@MybatisTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Sql({"/db/data/test/data-currency.sql", "/db/data/test/data-account_type.sql", "/db/data/test/data-account.sql",
       "/db/data/test/data-category.sql", "/db/data/test/data-item.sql", "/db/data/test/data-trade.sql"})
-public class TradeMapperTest {
+public class TradeMapperTest extends BaseMapperTest {
 
     @Autowired
     private TradeMapper mapper;

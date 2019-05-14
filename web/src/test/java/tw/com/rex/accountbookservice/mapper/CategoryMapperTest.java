@@ -2,14 +2,10 @@ package tw.com.rex.accountbookservice.mapper;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringRunner;
+import tw.com.rex.accountbookservice.mapper.base.BaseMapperTest;
 import tw.com.rex.accountbookservice.model.dao.Category;
-import tw.com.rex.accountbookservice.model.dao.Currency;
 import tw.com.rex.accountbookservice.model.define.CategoryTypeEnum;
 
 import java.util.Date;
@@ -17,11 +13,8 @@ import java.util.Date;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-@RunWith(SpringRunner.class)
-@MybatisTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Sql({"/db/data/test/data-category.sql"})
-public class CategoryMapperTest {
+public class CategoryMapperTest extends BaseMapperTest {
 
     @Autowired
     private CategoryMapper mapper;
