@@ -1,6 +1,6 @@
 INSERT INTO account (id, name, account_type_id, currency_id, create_date) SELECT 'a', 'test_1', type.id, c.id, NOW()  FROM account_type type, currency c WHERE type.id = 'a' AND c.id = 'a';
-INSERT INTO account (id, name, account_type_id, currency_id, create_date) SELECT 'b', 'test_11', type.id, c.id, NOW()  FROM account_type type, currency c WHERE type.id = 'a' AND c.id = 'a';
-INSERT INTO account (id, name, account_type_id, currency_id, create_date) SELECT 'c', 'test_2', type.id, c.id, NOW()  FROM account_type type, currency c WHERE type.id = 'b' AND c.id = 'b';
-INSERT INTO account (id, name, account_type_id, currency_id, create_date) SELECT 'd', 'test_22', type.id, c.id, NOW()  FROM account_type type, currency c WHERE type.id = 'b' AND c.id = 'b';
-INSERT INTO account (id, name, account_type_id, currency_id, create_date) SELECT 'e', 'test_3', type.id, c.id, NOW()  FROM account_type type, currency c WHERE type.id = 'c' AND c.id = 'c';
-INSERT INTO account (id, name, account_type_id, currency_id, create_date) SELECT 'f', 'test_33', type.id, c.id, NOW()  FROM account_type type, currency c WHERE type.id = 'c' AND c.id = 'c';
+INSERT INTO account (id, name, account_type_id, currency_id, create_date) SELECT 'b', 'test_2', type.id, c.id, NOW()  FROM account_type type, currency c WHERE type.id = 'a' AND c.id = 'a';
+INSERT INTO account (id, name, account_type_id, currency_id, create_date) SELECT 'c', 'test_3', type.id, c.id, NOW()  FROM account_type type, currency c WHERE type.id = 'b' AND c.id = 'b';
+INSERT INTO account (id, name, account_type_id, currency_id, create_date) SELECT 'd', 'test_4', type.id, c.id, NOW()  FROM account_type type, currency c WHERE type.id = 'b' AND c.id = 'b';
+INSERT INTO account (id, name, account_type_id, currency_id, create_date) SELECT 'e', 'test_5', type.id, c.id, NOW()  FROM account_type type, currency c WHERE type.id = 'c' AND c.id = 'a';
+INSERT INTO account (id, name, account_type_id, currency_id, create_date) SELECT 'f', 'test_6', type.id, c.id, NOW()  FROM account_type type, currency c WHERE type.id = 'c' AND c.id = 'b';

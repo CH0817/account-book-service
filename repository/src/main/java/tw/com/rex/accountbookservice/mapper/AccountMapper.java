@@ -1,7 +1,12 @@
 package tw.com.rex.accountbookservice.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import tw.com.rex.accountbookservice.model.dao.Account;
 
+import java.util.Collection;
+import java.util.List;
+
+@Mapper
 public interface AccountMapper {
 
     int deleteByPrimaryKey(String id);
@@ -12,4 +17,5 @@ public interface AccountMapper {
 
     int updateByPrimaryKeySelective(Account record);
 
+    List<Account> selectAll();
 }

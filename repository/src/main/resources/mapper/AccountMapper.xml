@@ -141,4 +141,9 @@
         </set>
         where id = #{id,jdbcType=VARCHAR}
     </update>
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM account
+    </select>
 </mapper>
