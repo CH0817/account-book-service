@@ -1,7 +1,11 @@
 package tw.com.rex.accountbookservice.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import tw.com.rex.accountbookservice.model.dao.Currency;
 
+import java.util.List;
+
+@Mapper
 public interface CurrencyMapper {
 
     int deleteByPrimaryKey(String id);
@@ -12,4 +16,5 @@ public interface CurrencyMapper {
 
     int updateByPrimaryKeySelective(Currency record);
 
+    List<Currency> selectAll();
 }
