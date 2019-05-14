@@ -1,7 +1,11 @@
 package tw.com.rex.accountbookservice.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import tw.com.rex.accountbookservice.model.dao.Category;
 
+import java.util.List;
+
+@Mapper
 public interface CategoryMapper {
 
     int deleteByPrimaryKey(String id);
@@ -12,4 +16,5 @@ public interface CategoryMapper {
 
     int updateByPrimaryKeySelective(Category record);
 
+    List<Category> selectAll();
 }
