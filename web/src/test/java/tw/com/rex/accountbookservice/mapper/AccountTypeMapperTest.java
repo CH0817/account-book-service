@@ -23,19 +23,19 @@ public class AccountTypeMapperTest {
 
     @Autowired
     private AccountTypeMapper mapper;
-    private AccountType accountType;
+    private AccountType entity;
 
     @Before
     public void setUp() {
-        accountType = new AccountType();
-        accountType.setName("XD");
-        accountType.setCreateDate(new Date());
+        entity = new AccountType();
+        entity.setName("XD");
+        entity.setCreateDate(new Date());
     }
 
     @Test
     public void insert() {
-        mapper.insertSelective(accountType);
-        assertNotNull(accountType.getId());
+        mapper.insertSelective(entity);
+        assertNotNull(entity.getId());
     }
 
     @Test
@@ -45,9 +45,9 @@ public class AccountTypeMapperTest {
 
     @Test
     public void updateByKey() {
-        accountType.setId("a");
-        accountType.setUpdateDate(new Date());
-        assertEquals(1, mapper.updateByPrimaryKeySelective(accountType));
+        entity.setId("a");
+        entity.setUpdateDate(new Date());
+        assertEquals(1, mapper.updateByPrimaryKeySelective(entity));
     }
 
     @Test
