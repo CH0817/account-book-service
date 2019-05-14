@@ -1,7 +1,11 @@
 package tw.com.rex.accountbookservice.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import tw.com.rex.accountbookservice.model.dao.Trade;
 
+import java.util.List;
+
+@Mapper
 public interface TradeMapper {
 
     int deleteByPrimaryKey(String id);
@@ -12,4 +16,5 @@ public interface TradeMapper {
 
     int updateByPrimaryKeySelective(Trade record);
 
+    List<Trade> selectAll();
 }
