@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tw.com.rex.accountbookservice.mapper.AccountMapper">
+    <resultMap id="BaseResultMap" type="tw.com.rex.accountbookservice.model.dao.Account">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="account_type_id" jdbcType="VARCHAR" property="accountTypeId"/>
+        <result column="currency_id" jdbcType="VARCHAR" property="currencyId"/>
+        <result column="init_money" jdbcType="DECIMAL" property="initMoney"/>
+        <result column="current_money" jdbcType="DECIMAL" property="currentMoney"/>
+        <result column="closing_date" jdbcType="DATE" property="closingDate"/>
+        <result column="payment_due_date" jdbcType="DATE" property="paymentDueDate"/>
+        <result column="note" jdbcType="VARCHAR" property="note"/>
+        <result column="create_date" jdbcType="DATE" property="createDate"/>
+        <result column="update_date" jdbcType="DATE" property="updateDate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, account_type_id, currency_id, init_money, current_money, closing_date,
+        payment_due_date, note, create_date, update_date
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from account
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from account
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insertSelective" parameterType="tw.com.rex.accountbookservice.model.dao.Account">
+        <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            select uuid()
+        </selectKey>
+        insert into account
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="accountTypeId != null">
+                account_type_id,
+            </if>
+            <if test="currencyId != null">
+                currency_id,
+            </if>
+            <if test="initMoney != null">
+                init_money,
+            </if>
+            <if test="currentMoney != null">
+                current_money,
+            </if>
+            <if test="closingDate != null">
+                closing_date,
+            </if>
+            <if test="paymentDueDate != null">
+                payment_due_date,
+            </if>
+            <if test="note != null">
+                note,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="accountTypeId != null">
+                #{accountTypeId,jdbcType=VARCHAR},
+            </if>
+            <if test="currencyId != null">
+                #{currencyId,jdbcType=VARCHAR},
+            </if>
+            <if test="initMoney != null">
+                #{initMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="currentMoney != null">
+                #{currentMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="closingDate != null">
+                #{closingDate,jdbcType=DATE},
+            </if>
+            <if test="paymentDueDate != null">
+                #{paymentDueDate,jdbcType=DATE},
+            </if>
+            <if test="note != null">
+                #{note,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=DATE},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="tw.com.rex.accountbookservice.model.dao.Account">
+        update account
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="accountTypeId != null">
+                account_type_id = #{accountTypeId,jdbcType=VARCHAR},
+            </if>
+            <if test="currencyId != null">
+                currency_id = #{currencyId,jdbcType=VARCHAR},
+            </if>
+            <if test="initMoney != null">
+                init_money = #{initMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="currentMoney != null">
+                current_money = #{currentMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="closingDate != null">
+                closing_date = #{closingDate,jdbcType=DATE},
+            </if>
+            <if test="paymentDueDate != null">
+                payment_due_date = #{paymentDueDate,jdbcType=DATE},
+            </if>
+            <if test="note != null">
+                note = #{note,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=DATE},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=DATE},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

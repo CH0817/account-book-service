@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tw.com.rex.accountbookservice.mapper.TradeMapper">
+    <resultMap id="BaseResultMap" type="tw.com.rex.accountbookservice.model.dao.Trade">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="account_id" jdbcType="VARCHAR" property="accountId"/>
+        <result column="item_id" jdbcType="VARCHAR" property="itemId"/>
+        <result column="transact_date" jdbcType="DATE" property="transactDate"/>
+        <result column="cost" jdbcType="DECIMAL" property="cost"/>
+        <result column="note" jdbcType="VARCHAR" property="note"/>
+        <result column="create_date" jdbcType="DATE" property="createDate"/>
+        <result column="update_date" jdbcType="DATE" property="updateDate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, account_id, item_id, transact_date, cost, note, create_date, update_date
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from trade
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from trade
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insertSelective" parameterType="tw.com.rex.accountbookservice.model.dao.Trade">
+        <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            select uuid()
+        </selectKey>
+        insert into trade
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="accountId != null">
+                account_id,
+            </if>
+            <if test="itemId != null">
+                item_id,
+            </if>
+            <if test="transactDate != null">
+                transact_date,
+            </if>
+            <if test="cost != null">
+                cost,
+            </if>
+            <if test="note != null">
+                note,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="accountId != null">
+                #{accountId,jdbcType=VARCHAR},
+            </if>
+            <if test="itemId != null">
+                #{itemId,jdbcType=VARCHAR},
+            </if>
+            <if test="transactDate != null">
+                #{transactDate,jdbcType=DATE},
+            </if>
+            <if test="cost != null">
+                #{cost,jdbcType=DECIMAL},
+            </if>
+            <if test="note != null">
+                #{note,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=DATE},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="tw.com.rex.accountbookservice.model.dao.Trade">
+        update trade
+        <set>
+            <if test="accountId != null">
+                account_id = #{accountId,jdbcType=VARCHAR},
+            </if>
+            <if test="itemId != null">
+                item_id = #{itemId,jdbcType=VARCHAR},
+            </if>
+            <if test="transactDate != null">
+                transact_date = #{transactDate,jdbcType=DATE},
+            </if>
+            <if test="cost != null">
+                cost = #{cost,jdbcType=DECIMAL},
+            </if>
+            <if test="note != null">
+                note = #{note,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=DATE},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=DATE},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>
