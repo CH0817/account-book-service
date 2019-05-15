@@ -2,27 +2,21 @@ package tw.com.rex.accountbookservice.service;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import tw.com.rex.accountbookservice.mapper.AccountTypeMapper;
 import tw.com.rex.accountbookservice.model.dao.AccountType;
 import tw.com.rex.accountbookservice.service.base.BaseServiceTest;
+import tw.com.rex.accountbookservice.service.impl.AccountTypeServiceImpl;
 
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 
-@EnableAutoConfiguration(
-        exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class,
-                   HibernateJpaAutoConfiguration.class})
 public class AccountTypeServiceTest extends BaseServiceTest {
 
-    @Autowired
-    private AccountTypeService service;
-    @MockBean
+    @InjectMocks
+    private AccountTypeServiceImpl service;
+    @Mock
     private AccountTypeMapper mapper;
     private AccountType entity;
 
