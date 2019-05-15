@@ -2,13 +2,18 @@ package tw.com.rex.accountbookservice.model.dao;
 
 import java.util.Date;
 
+import tw.com.rex.accountbookservice.annotation.NecessaryData;
 import tw.com.rex.accountbookservice.model.dao.base.BaseDao;
 
 public class AccountType extends BaseDao {
 
+    @NecessaryData(useIn = {NecessaryData.DLL.UPDATE, NecessaryData.DLL.DELETE})
     private String id;
+    @NecessaryData(useIn = {NecessaryData.DLL.UPDATE, NecessaryData.DLL.INSERT})
     private String name;
+    @NecessaryData(useIn = {NecessaryData.DLL.INSERT})
     private Date createDate;
+    @NecessaryData(useIn = {NecessaryData.DLL.UPDATE,})
     private Date updateDate;
 
     public String getId() {

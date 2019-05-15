@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 public @interface NecessaryData {
 
-    enum DLL {SAVE, UPDATE, DELETE}
+    enum DLL {INSERT, UPDATE, DELETE}
 
     DLL[] useIn();
 
